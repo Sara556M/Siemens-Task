@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   run-ui-tests:
     docker:
-      - image: cimg/node:18.20.2
+      - image: circleci/node:18.20.2-browsers
     working_directory: ~/project
     steps:
       - checkout
@@ -16,7 +16,6 @@ jobs:
           name: Run Contact Page Test
           command: |
             cd ui-tests
-            chmod +x node_modules/.bin/nightwatch
             npx nightwatch --env default tests/contactTest.js
       - run:
           name: Run Home Page Test
