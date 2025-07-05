@@ -1,40 +1,51 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:node:api-tests,package_manager:yarn:,test:jest:
 version: 2.1
-orbs:
-  node: circleci/node@5
+
 jobs:
-  test-node:
-    # Install node dependencies and run tests
-    executor: node/default
-    working_directory: ~/project/api-tests
-    environment:
-      JEST_JUNIT_OUTPUT_DIR: ./test-results/
-    steps:
-      - checkout:
-          path: ~/project
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          command: yarn add jest-junit --ignore-workspace-root-check
-      - run:
-          name: Run tests
-          command: yarn run test --ci --runInBand --reporters=default --reporters=jest-junit
-      - store_test_results:
-          path: ./test-results/
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
+  run-ui-tests:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:18.20.2
+    working_directory: ~/project
     steps:
-      # Replace this with steps to deploy to users
+      - checkout
       - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+          name: Install UI Test Dependencies
+          command: |
+            cd ui-tests
+            npm install
+      - run:
+          name: Run Contact Page Test
+          command: |
+            cd ui-tests
+            chmod +x node_modules/.bin/nightwatch
+            npx nightwatch --env default tests/contactTest.js
+      - run:
+          name: Run Home Page Test
+          command: |
+            cd ui-tests
+            npx nightwatch --env default tests/homeTest.js
+
+  run-api-tests:
+    docker:
+      - image: cimg/node:18.20.2
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Install API Test Dependencies
+          command: |
+            cd api-tests
+            npm install
+      - run:
+          name: Run API Tests
+          command: |
+            cd api-tests
+            npm test
+
 workflows:
-  build-and-test:
+  version: 2
+  run-tests:
     jobs:
-      - test-node
-    # - deploy:
-    #     requires:
-    #       - test-node
+      - run-ui-tests
+      - run-api-tests:
+          requires:
+            - run-ui-tests
