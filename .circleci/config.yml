@@ -1,52 +1,31 @@
 version: 2.1
 
-jobs:
-  run-ui-tests:
+executors:
+  node-executor:
     docker:
-      - image: cimg/node:18.20.2-browsers
+      - image: cimg/node:20.12.2-browsers  # Includes Node.js, Chrome, and Chromedriver
+
+jobs:
+  test-ui:
+    executor: node-executor
     working_directory: ~/project
     steps:
       - checkout
 
       - run:
-          name: Install compatible ChromeDriver 120
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y wget unzip
-            wget https://storage.googleapis.com/chrome-for-testing-public/120.0.6099.71/linux64/chromedriver-linux64.zip
-            unzip chromedriver-linux64.zip
-            sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
-            sudo chmod +x /usr/local/bin/chromedriver
-            chromedriver --version
+          name: Install Dependencies
+          command: npm install
 
       - run:
-          name: Install dependencies
-          command: |
-            cd ui-tests
-            npm install
-
-      - run:
-          name: Fix permissions for Nightwatch
-          command: |
-            cd ui-tests
-            chmod +x ./node_modules/.bin/nightwatch
-
-      - run:
-          name: Run UI tests
-          command: |
-            cd ui-tests
-            ./node_modules/.bin/nightwatch --env chrome_headless tests
+          name: Run Nightwatch UI Tests (Headless Chrome)
+          command: npm run test
 
       - store_artifacts:
-          path: ui-tests/screenshots
-          destination: screenshots
-
-      - store_artifacts:
-          path: ui-tests/tests_output
+          path: tests_output
           destination: test-reports
 
 workflows:
   version: 2
-  run-tests:
+  test-workflow:
     jobs:
-      - run-ui-tests
+      - test-ui
