@@ -12,20 +12,14 @@ jobs:
           command: |
             cd ui-tests
             npm install
-            sudo chmod -R 777 node_modules
-      - run:
-          name: Verify Chrome
-          command: |
-            google-chrome --version
-            chromedriver --version
+            # Verify Chrome installation
+            ls -la /usr/bin/google-chrome* || true
+            google-chrome-stable --version || true
       - run:
           name: Run UI Tests
           command: |
             cd ui-tests
             npm test
-          environment:
-            MOZ_HEADLESS: 1
-            DISPLAY: ":99"
       - store_artifacts:
           path: ui-tests/screenshots
           destination: screenshots
@@ -33,7 +27,7 @@ jobs:
           path: ui-tests/test-results
 
   run-api-tests:
-    docker:
+    docker: 
       - image: cimg/node:18.20.2
     working_directory: ~/project
     steps:

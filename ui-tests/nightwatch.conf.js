@@ -12,46 +12,25 @@ module.exports = {
   },
 
   test_settings: {
-    default: {
-      disable_error_log: false,
+    chrome_headless: {
       launch_url: 'http://automationpractice.multiformis.com',
+      desiredCapabilities: {
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+          args: [
+            '--headless=new',
+            '--no-sandbox',
+            '--disable-dev-shm-usage',
+            '--window-size=1280,800'
+          ]
+        },
+        acceptInsecureCerts: true
+      },
       screenshots: {
         enabled: true,
         path: 'screenshots',
         on_failure: true,
         on_error: true
-      },
-      desiredCapabilities: {
-        browserName: 'chrome',
-        acceptInsecureCerts: true
-      }
-    },
-    
-    chrome_headless: {
-      extends: 'default',
-      desiredCapabilities: {
-        chromeOptions: {
-          args: [
-            '--headless=new',
-            '--no-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-gpu',
-            '--window-size=1280,800'
-          ]
-        }
-      }
-    },
-    
-    chrome: {
-      extends: 'default',
-      desiredCapabilities: {
-        chromeOptions: {
-          args: [
-            '--no-sandbox',
-            '--disable-dev-shm-usage',
-            '--window-size=1280,800'
-          ]
-        }
       }
     }
   }
