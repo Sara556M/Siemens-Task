@@ -8,24 +8,30 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Verify Chrome Installation
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y google-chrome-stable
+            google-chrome-stable --version
+      - run:
           name: Install Dependencies
           command: |
             cd ui-tests
             npm install
-            # Fix permissions for node_modules
-            sudo chown -R circleci:circleci node_modules
-            chmod -R 755 node_modules
-            # Verify nightwatch executable
-            ls -la node_modules/.bin/nightwatch
-            chmod +x node_modules/.bin/nightwatch
+            # Fix ChromeDriver permissions
+            chmod +x node_modules/chromedriver/lib/chromedriver/chromedriver
       - run:
           name: Run UI Tests
           command: |
             cd ui-tests
+            export CHROME_BIN=$(which google-chrome-stable)
             ./node_modules/.bin/nightwatch --env chrome_headless tests
       - store_artifacts:
           path: ui-tests/screenshots
           destination: screenshots
+      - store_artifacts:
+          path: ui-tests/tests_output
+          destination: test-reports
 
   run-api-tests:
     docker:

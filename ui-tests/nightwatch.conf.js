@@ -22,7 +22,8 @@ module.exports = {
             '--no-sandbox',
             '--disable-dev-shm-usage',
             '--window-size=1280,800'
-          ]
+          ],
+          binary: process.env.CHROME_BIN || '/usr/bin/google-chrome-stable'
         },
         acceptInsecureCerts: true
       },
