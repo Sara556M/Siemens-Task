@@ -4,31 +4,54 @@ module.exports = {
 
   webdriver: {
     start_process: true,
-    server_path: 'chromedriver',
-    port: 9515
+    server_path: require('chromedriver').path,
+    port: 9515,
+    cli_args: [
+      '--verbose'
+    ]
   },
 
   test_settings: {
-    chrome_headless: {
+    default: {
+      disable_error_log: false,
       launch_url: 'http://automationpractice.multiformis.com',
-      desiredCapabilities: {
-        browserName: 'chrome',
-        chromeOptions: {
-          args: [
-            '--headless',
-            '--no-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-gpu',
-            '--window-size=1280,800'
-          ]
-        },
-        acceptInsecureCerts: true
-      },
       screenshots: {
         enabled: true,
         path: 'screenshots',
         on_failure: true,
         on_error: true
+      },
+      desiredCapabilities: {
+        browserName: 'chrome',
+        acceptInsecureCerts: true
+      }
+    },
+    
+    chrome_headless: {
+      extends: 'default',
+      desiredCapabilities: {
+        chromeOptions: {
+          args: [
+            '--headless=new',
+            '--no-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--window-size=1280,800'
+          ]
+        }
+      }
+    },
+    
+    chrome: {
+      extends: 'default',
+      desiredCapabilities: {
+        chromeOptions: {
+          args: [
+            '--no-sandbox',
+            '--disable-dev-shm-usage',
+            '--window-size=1280,800'
+          ]
+        }
       }
     }
   }

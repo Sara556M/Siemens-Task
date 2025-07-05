@@ -8,15 +8,29 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install UI Test Dependencies
+          name: Install Dependencies
           command: |
             cd ui-tests
             npm install
+            sudo chmod -R 777 node_modules
+      - run:
+          name: Verify Chrome
+          command: |
+            google-chrome --version
+            chromedriver --version
       - run:
           name: Run UI Tests
           command: |
             cd ui-tests
             npm test
+          environment:
+            MOZ_HEADLESS: 1
+            DISPLAY: ":99"
+      - store_artifacts:
+          path: ui-tests/screenshots
+          destination: screenshots
+      - store_test_results:
+          path: ui-tests/test-results
 
   run-api-tests:
     docker:
