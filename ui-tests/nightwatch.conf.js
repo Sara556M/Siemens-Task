@@ -1,12 +1,10 @@
-const chromedriver = require('chromedriver');
-
 module.exports = {
   src_folders: ['tests'],
   page_objects_path: ['page-objects'],
 
   webdriver: {
     start_process: true,
-    server_path: chromedriver.path,
+    server_path: require('chromedriver').path,
     port: 9515,
     cli_args: ['--verbose']
   },
@@ -22,7 +20,8 @@ module.exports = {
             '--no-sandbox',
             '--disable-dev-shm-usage',
             '--window-size=1280,800'
-          ]
+          ],
+          binary: process.env.CHROME_BIN || '/usr/bin/google-chrome-stable'
         },
         acceptInsecureCerts: true
       },

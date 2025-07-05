@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "test": "npx nightwatch --env chrome_headless tests",
-    "test:debug": "npx nightwatch --env chrome tests"
+    "test:debug": "npx nightwatch --env chrome tests",
+    "test:win": "set CHROME_BIN=\"C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\" && npm test"
   },
   "devDependencies": {
     "nightwatch": "^3.12.2",
