@@ -3,8 +3,8 @@
             failures="0"
             tests="0">
 
-  <testsuite name="contactTest" id="contactTest"
-    errors="1" failures="0" hostname="" package="contactTest" skipped="8"
+  <testsuite name="homeTest" id="homeTest"
+    errors="1" failures="0" hostname="" package="homeTest" skipped="1"
     tests="0" time="0.000" timestamp="">
   
 
@@ -59,42 +59,7 @@ from unknown error: no chrome binary at &#34;C:\Program Files\Google\Chrome\Appl
   
     
     <testcase
-      name="TC_CU_01 – Valid Form Submission" classname="contactTest">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="TC_CU_02 – Missing Subject Heading" classname="contactTest">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="TC_CU_03 – Missing Email Address" classname="contactTest">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="TC_CU_04 – Invalid Email Format" classname="contactTest">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="TC_CU_05 – Missing Message Body" classname="contactTest">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="TC_CU_06 – Upload Valid File Only" classname="contactTest">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="TC_CU_07 – Upload Invalid File Type" classname="contactTest">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name="TC_CU_08 – Required Fields Only" classname="contactTest">
+      name="TC:Search for &#34;dress&#34; and verify results" classname="homeTest">
       <skipped />
     </testcase>
     

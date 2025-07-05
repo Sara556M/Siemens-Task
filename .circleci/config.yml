@@ -8,24 +8,22 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Verify Chrome Installation
+          name: Install Google Chrome
           command: |
             sudo apt-get update
             sudo apt-get install -y google-chrome-stable
-            google-chrome-stable --version
+            echo "export CHROME_BIN=$(which google-chrome-stable)" >> $BASH_ENV
       - run:
-          name: Install Dependencies
+          name: Install UI Test Dependencies
           command: |
             cd ui-tests
             npm install
-            # Fix ChromeDriver permissions
             chmod +x node_modules/chromedriver/lib/chromedriver/chromedriver
       - run:
           name: Run UI Tests
           command: |
             cd ui-tests
-            export CHROME_BIN=$(which google-chrome-stable)
-            ./node_modules/.bin/nightwatch --env chrome_headless tests
+            npm test
       - store_artifacts:
           path: ui-tests/screenshots
           destination: screenshots
