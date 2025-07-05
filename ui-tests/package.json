@@ -6,6 +6,6 @@
     "test:debug": "nightwatch --env chrome tests"
   },
   "devDependencies": {
-    "nightwatch": "^3.3.0" 
+    "nightwatch": "^3.3.0"
   }
 }

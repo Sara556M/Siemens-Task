@@ -1,23 +1,28 @@
-const { execSync } = require('child_process');
-const isCI = process.env.CI === 'true';
-
 module.exports = {
   src_folders: ['tests'],
   page_objects_path: ['page-objects'],
+
   webdriver: {
     start_process: true,
-    server_path: isCI ? '/usr/local/bin/chromedriver' : require('chromedriver').path,
+    server_path: '/usr/local/bin/chromedriver',
     port: 9515,
     cli_args: ['--verbose']
   },
+
   test_settings: {
     chrome_headless: {
       launch_url: 'http://automationpractice.multiformis.com',
       desiredCapabilities: {
         browserName: 'chrome',
         'goog:chromeOptions': {
-          args: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage', '--window-size=1280,800']
-        }
+          args: [
+            '--headless=new',
+            '--no-sandbox',
+            '--disable-dev-shm-usage',
+            '--window-size=1280,800'
+          ]
+        },
+        acceptInsecureCerts: true
       },
       screenshots: {
         enabled: true,

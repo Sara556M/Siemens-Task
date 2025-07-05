@@ -9,7 +9,7 @@ jobs:
       - checkout
 
       - run:
-          name: Install Google Chrome and ChromeDriver
+          name: Install compatible ChromeDriver 120
           command: |
             sudo apt-get update
             sudo apt-get install -y wget unzip
@@ -26,10 +26,16 @@ jobs:
             npm install
 
       - run:
-          name: Run UI Tests
+          name: Fix permissions for Nightwatch
           command: |
             cd ui-tests
-            npm test
+            chmod +x ./node_modules/.bin/nightwatch
+
+      - run:
+          name: Run UI tests
+          command: |
+            cd ui-tests
+            ./node_modules/.bin/nightwatch --env chrome_headless tests
 
       - store_artifacts:
           path: ui-tests/screenshots
