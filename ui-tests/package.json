@@ -2,12 +2,10 @@
   "name": "ui-tests",
   "version": "1.0.0",
   "scripts": {
-    "test": "npx nightwatch --env chrome_headless tests",
-    "test:debug": "npx nightwatch --env chrome tests",
-    "test:win": "set CHROME_BIN=\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" && npm test"
+    "test": "nightwatch --env chrome_headless tests",
+    "test:debug": "nightwatch --env chrome tests"
   },
   "devDependencies": {
-    "chromedriver": "^138.0.0",
-    "nightwatch": "^3.12.2"
+    "nightwatch": "^3.3.0" 
   }
 }

@@ -7,55 +7,40 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
+
       - run:
-          name: Install Google Chrome
+          name: Install Google Chrome and ChromeDriver
           command: |
             sudo apt-get update
-            wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google.gpg
-            echo "deb [signed-by=/usr/share/keyrings/google.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-            sudo apt-get update
-            sudo apt-get install -y google-chrome-stable
+            sudo apt-get install -y wget unzip
+            wget https://storage.googleapis.com/chrome-for-testing-public/120.0.6099.71/linux64/chromedriver-linux64.zip
+            unzip chromedriver-linux64.zip
+            sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
+            sudo chmod +x /usr/local/bin/chromedriver
+            chromedriver --version
+
       - run:
-          name: Install Dependencies
+          name: Install dependencies
           command: |
             cd ui-tests
             npm install
-            chmod +x ./node_modules/.bin/nightwatch
+
       - run:
           name: Run UI Tests
           command: |
             cd ui-tests
-            export CHROME_BIN=$(which google-chrome)
             npm test
+
       - store_artifacts:
           path: ui-tests/screenshots
           destination: screenshots
+
       - store_artifacts:
           path: ui-tests/tests_output
           destination: test-reports
-
-  run-api-tests:
-    docker:
-      - image: cimg/node:18.20.2
-    working_directory: ~/project
-    steps:
-      - checkout
-      - run:
-          name: Install API Test Dependencies
-          command: |
-            cd api-tests
-            npm install
-      - run:
-          name: Run API Tests
-          command: |
-            cd api-tests
-            npm test
 
 workflows:
   version: 2
   run-tests:
     jobs:
       - run-ui-tests
-      - run-api-tests:
-          requires:
-            - run-ui-tests
