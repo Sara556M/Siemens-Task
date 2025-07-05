@@ -7,26 +7,35 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
+
       - run:
-          name: Install Google Chrome
+          name: Install Chrome dependencies and Google Chrome
           command: |
             sudo apt-get update
+            sudo apt-get install -y wget gnupg curl
+            wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google.gpg
+            echo "deb [signed-by=/usr/share/keyrings/google.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+            sudo apt-get update
             sudo apt-get install -y google-chrome-stable
-            echo "export CHROME_BIN=$(which google-chrome-stable)" >> $BASH_ENV
+
       - run:
           name: Install UI Test Dependencies
           command: |
             cd ui-tests
             npm install
             chmod +x node_modules/chromedriver/lib/chromedriver/chromedriver
+
       - run:
           name: Run UI Tests
           command: |
             cd ui-tests
+            export CHROME_BIN=$(which google-chrome-stable)
             npm test
+
       - store_artifacts:
           path: ui-tests/screenshots
           destination: screenshots
+
       - store_artifacts:
           path: ui-tests/tests_output
           destination: test-reports
@@ -37,11 +46,13 @@ jobs:
     working_directory: ~/project
     steps:
       - checkout
+
       - run:
           name: Install API Test Dependencies
           command: |
             cd api-tests
             npm install
+
       - run:
           name: Run API Tests
           command: |
