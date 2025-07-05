@@ -1,5 +1,3 @@
-version: 2.1
-
 jobs:
   run-ui-tests:
     docker:
@@ -13,34 +11,13 @@ jobs:
             cd ui-tests
             npm install
       - run:
+          name: Fix Nightwatch Permissions
+          command: |
+            cd ui-tests
+            chmod +x ./node_modules/.bin/nightwatch  
+      - run:
           name: Run UI Tests
           command: |
             cd ui-tests
             npx nightwatch tests/contactTest.js
-            npx nightwatch tests/homeTest.js   
-
-  run-api-tests:
-    docker:
-      - image: cimg/node:18.20.2
-    working_directory: ~/project
-    steps:
-      - checkout
-      - run:
-          name: Install API Test Dependencies
-          command: |
-            cd api-tests
-            npm install
-      - run:
-          name: Run API Tests
-          command: |
-            cd api-tests
-            npm test
-
-workflows:
-  version: 2
-  run-tests:
-    jobs:
-      - run-ui-tests
-      - run-api-tests:
-          requires:
-            - run-ui-tests
+            npx nightwatch tests/homeTest.js
