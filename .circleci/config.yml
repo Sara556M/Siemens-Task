@@ -8,20 +8,20 @@ executors:
 jobs:
   test-ui:
     executor: node-executor
-    working_directory: ~/project/ui-tests   # Updated to match actual folder structure
+    working_directory: ~/project
     steps:
       - checkout
 
       - run:
-          name: Install Dependencies
-          command: npm install
+          name: Move into ui-tests folder
+          command: cd ui-tests && npm install
 
       - run:
           name: Run Nightwatch UI Tests (Headless Chrome)
-          command: npm run test
+          command: cd ui-tests && npm run test
 
       - store_artifacts:
-          path: tests_output
+          path: ui-tests/tests_output
           destination: test-reports
 
 workflows:
