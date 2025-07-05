@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   run-ui-tests:
     docker:
-      - image: circleci/node:18.17.0-browsers
+      - image: cimg/node:18.17.0-browsers   # ✅ FIXED HERE
     working_directory: ~/project
     steps:
       - checkout
