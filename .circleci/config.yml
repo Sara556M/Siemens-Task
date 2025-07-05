@@ -8,28 +8,44 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Dependencies
+          name: Install UI Test Dependencies
           command: |
             cd ui-tests
             npm install
       - run:
-          name: Fix Nightwatch Permissions
+          name: Run Contact Page Test (Headless)
           command: |
             cd ui-tests
-            chmod +x ./node_modules/.bin/nightwatch
+            chmod +x node_modules/.bin/nightwatch
+            npx nightwatch --env chrome_headless tests/contactTest.js
       - run:
-          name: Run Contact Page Tests
+          name: Run Home Page Test (Headless)
           command: |
             cd ui-tests
-            npx nightwatch --env default tests/contactTest.js
+            npx nightwatch --env chrome_headless tests/homeTest.js
+
+  run-api-tests:
+    docker:
+      - image: cimg/node:18.17.0
+    working_directory: ~/project
+    steps:
+      - checkout
       - run:
-          name: Run Home Page Tests
+          name: Install API Test Dependencies
           command: |
-            cd ui-tests
-            npx nightwatch --env default tests/homeTest.js
+            cd api-tests
+            npm install
+      - run:
+          name: Run API Tests
+          command: |
+            cd api-tests
+            npm test
 
 workflows:
   version: 2
   run-tests:
     jobs:
       - run-ui-tests
+      - run-api-tests:
+          requires:
+            - run-ui-tests
