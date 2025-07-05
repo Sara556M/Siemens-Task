@@ -13,15 +13,15 @@ jobs:
             cd ui-tests
             npm install
       - run:
-          name: Run Contact Page Tests
+          name: Run Contact Page Test
           command: |
             cd ui-tests
             npx nightwatch --env default tests/contactTest.js
       - run:
-          name: Run Home Page Tests
+          name: Run Home Page Test
           command: |
             cd ui-tests
-            npx nightwatch tests/homeTest.js
+            npx nightwatch --env default tests/homeTest.js
 
   run-api-tests:
     docker:
