@@ -3,12 +3,12 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: cimg/node:20.12.2-browsers  # Includes Node.js, Chrome, and Chromedriver
+      - image: cimg/node:20.12.2-browsers
 
 jobs:
   test-ui:
     executor: node-executor
-    working_directory: ~/project
+    working_directory: ~/project/ui-tests   # Updated to match actual folder structure
     steps:
       - checkout
 
