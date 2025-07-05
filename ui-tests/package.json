@@ -1,8 +1,9 @@
 {
   "name": "ui-tests",
   "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
-    "test": "npx nightwatch tests"
+    "test": "npx nightwatch --env chrome_headless tests"
   },
   "devDependencies": {
     "chromedriver": "^138.0.1",

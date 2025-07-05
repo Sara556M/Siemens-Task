@@ -1,14 +1,10 @@
 version: 2.1
 
-executors:
-  chrome-executor:
-    docker:
-      - image: cimg/node:18.20.2-browsers  # تحتوي على Chrome و ChromeDriver مدمجين
-    working_directory: ~/project
-
 jobs:
   run-ui-tests:
-    executor: chrome-executor
+    docker:
+      - image: cimg/node:18.20.2-browsers
+    working_directory: ~/project
     steps:
       - checkout
       - run:
@@ -17,15 +13,11 @@ jobs:
             cd ui-tests
             npm install
       - run:
-          name: Run Contact Test in Headless Mode
+          name: Run UI Tests (Headless)
           command: |
             cd ui-tests
-            npx nightwatch --env chrome_headless tests/contactTest.js
-      - run:
-          name: Run Home Test in Headless Mode
-          command: |
-            cd ui-tests
-            npx nightwatch --env chrome_headless tests/homeTest.js
+            chmod +x node_modules/.bin/nightwatch
+            npm test
 
   run-api-tests:
     docker:

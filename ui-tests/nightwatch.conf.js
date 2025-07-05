@@ -11,37 +11,9 @@ module.exports = {
   },
 
   test_settings: {
-    default: {
-      launch_url: 'http://automationpractice.multiformis.com',
-      desiredCapabilities: {
-        browserName: 'chrome',
-        acceptInsecureCerts: true,
-        chromeOptions: {
-          args: [
-            '--no-sandbox',
-            '--disable-dev-shm-usage',
-            '--window-size=1280,800'
-          ]
-        }
-      },
-      screenshots: {
-        enabled: true,
-        path: 'screenshots',
-        on_failure: true,
-        on_error: true
-      }
-    },
-
     chrome_headless: {
-      launch_url: 'http://automationpractice.multiformis.com',
-      webdriver: {
-        start_process: true,
-        server_path: chromedriver.path,
-        port: 9515
-      },
       desiredCapabilities: {
         browserName: 'chrome',
-        acceptInsecureCerts: true,
         chromeOptions: {
           args: [
             '--headless',
@@ -50,7 +22,14 @@ module.exports = {
             '--disable-gpu',
             '--window-size=1280,800'
           ]
-        }
+        },
+        acceptInsecureCerts: true
+      },
+      screenshots: {
+        enabled: true,
+        path: 'screenshots',
+        on_failure: true,
+        on_error: true
       }
     }
   }
