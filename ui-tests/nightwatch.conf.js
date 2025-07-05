@@ -1,17 +1,16 @@
-const chromedriver = require('chromedriver');
-
 module.exports = {
   src_folders: ['tests'],
   page_objects_path: ['page-objects'],
 
   webdriver: {
     start_process: true,
-    server_path: chromedriver.path,
+    server_path: 'chromedriver',
     port: 9515
   },
 
   test_settings: {
     chrome_headless: {
+      launch_url: 'http://automationpractice.multiformis.com',
       desiredCapabilities: {
         browserName: 'chrome',
         chromeOptions: {

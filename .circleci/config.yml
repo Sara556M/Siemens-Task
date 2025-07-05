@@ -13,10 +13,9 @@ jobs:
             cd ui-tests
             npm install
       - run:
-          name: Run UI Tests (Headless)
+          name: Run UI Tests
           command: |
             cd ui-tests
-            chmod +x node_modules/.bin/nightwatch
             npm test
 
   run-api-tests:
