@@ -13,11 +13,15 @@ jobs:
       - checkout
 
       - run:
-          name: Move into ui-tests folder
+          name: Install dependencies
           command: cd ui-tests && npm install
 
       - run:
-          name: Run Nightwatch UI Tests (Headless Chrome)
+          name: Make Nightwatch executable
+          command: cd ui-tests && chmod +x ./node_modules/.bin/nightwatch
+
+      - run:
+          name: Run Nightwatch UI Tests (Chrome Headless)
           command: cd ui-tests && npm run test
 
       - store_artifacts:
