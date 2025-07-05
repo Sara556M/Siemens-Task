@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   run-ui-tests:
     docker:
-      - image: cimg/node:18.17.0-browsers
+      - image: cypress/browsers:node18.12.0-chrome107
     working_directory: ~/project
     steps:
       - checkout
@@ -16,7 +16,6 @@ jobs:
           name: Run Contact Page Test (Headless)
           command: |
             cd ui-tests
-            chmod +x node_modules/.bin/nightwatch
             npx nightwatch --env chrome_headless tests/contactTest.js
       - run:
           name: Run Home Page Test (Headless)
