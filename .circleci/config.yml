@@ -12,22 +12,23 @@ jobs:
           command: |
             cd ui-tests
             npm install
-            # Verify Chrome installation
-            ls -la /usr/bin/google-chrome* || true
-            google-chrome-stable --version || true
+            # Fix permissions for node_modules
+            sudo chown -R circleci:circleci node_modules
+            chmod -R 755 node_modules
+            # Verify nightwatch executable
+            ls -la node_modules/.bin/nightwatch
+            chmod +x node_modules/.bin/nightwatch
       - run:
           name: Run UI Tests
           command: |
             cd ui-tests
-            npm test
+            ./node_modules/.bin/nightwatch --env chrome_headless tests
       - store_artifacts:
           path: ui-tests/screenshots
           destination: screenshots
-      - store_test_results:
-          path: ui-tests/test-results
 
   run-api-tests:
-    docker: 
+    docker:
       - image: cimg/node:18.20.2
     working_directory: ~/project
     steps:
