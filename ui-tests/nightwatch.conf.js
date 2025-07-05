@@ -15,15 +15,14 @@ module.exports = {
       launch_url: 'http://automationpractice.multiformis.com',
       desiredCapabilities: {
         browserName: 'chrome',
+        acceptInsecureCerts: true,
         chromeOptions: {
           args: [
             '--no-sandbox',
             '--disable-dev-shm-usage',
-            '--disable-gpu',
             '--window-size=1280,800'
           ]
-        },
-        acceptInsecureCerts: true
+        }
       },
       screenshots: {
         enabled: true,
@@ -34,14 +33,22 @@ module.exports = {
     },
 
     chrome_headless: {
+      launch_url: 'http://automationpractice.multiformis.com',
+      webdriver: {
+        start_process: true,
+        server_path: chromedriver.path,
+        port: 9515
+      },
       desiredCapabilities: {
         browserName: 'chrome',
+        acceptInsecureCerts: true,
         chromeOptions: {
           args: [
             '--headless',
             '--no-sandbox',
             '--disable-dev-shm-usage',
-            '--disable-gpu'
+            '--disable-gpu',
+            '--window-size=1280,800'
           ]
         }
       }
