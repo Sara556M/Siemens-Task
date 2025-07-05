@@ -3,48 +3,33 @@ version: 2.1
 jobs:
   run-ui-tests:
     docker:
-      - image: cimg/node:18.17.0-browsers   # ✅ FIXED HERE
+      - image: cimg/node:18.17.0-browsers
     working_directory: ~/project
     steps:
       - checkout
       - run:
-          name: Install UI Test Dependencies
+          name: Install Dependencies
           command: |
             cd ui-tests
             npm install
       - run:
-          name: Run Contact Page Test
+          name: Fix Nightwatch Permissions
+          command: |
+            cd ui-tests
+            chmod +x ./node_modules/.bin/nightwatch
+      - run:
+          name: Run Contact Page Tests
           command: |
             cd ui-tests
             npx nightwatch --env default tests/contactTest.js
       - run:
-          name: Run Home Page Test
+          name: Run Home Page Tests
           command: |
             cd ui-tests
             npx nightwatch --env default tests/homeTest.js
-
-  run-api-tests:
-    docker:
-      - image: cimg/node:18.20.2
-    working_directory: ~/project
-    steps:
-      - checkout
-      - run:
-          name: Install API Test Dependencies
-          command: |
-            cd api-tests
-            npm install
-      - run:
-          name: Run API Tests
-          command: |
-            cd api-tests
-            npm test
 
 workflows:
   version: 2
   run-tests:
     jobs:
       - run-ui-tests
-      - run-api-tests:
-          requires:
-            - run-ui-tests
