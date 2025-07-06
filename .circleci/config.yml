@@ -3,31 +3,20 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/node:18.20.2-browsers   # 👈 Includes Chrome & Java
-
+      - image: cimg/node:18.20.2-browsers  # ✅ Includes Chrome, Chromedriver, Node, NPM
     working_directory: ~/project
 
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-            - ui-tests-deps-{{ checksum "ui-tests/package-lock.json" }}
-            - ui-tests-deps-
-
       - run:
-          name: Install NPM Dependencies
+          name: Install dependencies
           command: |
             cd ui-tests
             npm install
 
-      - save_cache:
-          key: ui-tests-deps-{{ checksum "ui-tests/package-lock.json" }}
-          paths:
-            - ui-tests/node_modules
-
       - run:
-          name: Run Selenium & Nightwatch Tests
+          name: Run Nightwatch tests (Chrome Headless)
           command: |
             cd ui-tests
             npm test

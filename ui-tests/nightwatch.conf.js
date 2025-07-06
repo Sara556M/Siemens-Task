@@ -1,55 +1,36 @@
-const seleniumServer = require('selenium-server');
-const chromedriver = require('chromedriver');
-const PKG = require('./package.json');
-
-const TEST_RESULTS_PATH = './test-results/' + PKG.version + '/';
-
 module.exports = {
   src_folders: ['tests'],
   page_objects_path: ['page-objects'],
-  output_folder: TEST_RESULTS_PATH,
+  output_folder: 'tests_output',
 
-  selenium: {
+  webdriver: {
     start_process: true,
-    server_path: seleniumServer.path,
-    host: '127.0.0.1',
-    port: 4444,
-    cli_args: {
-      'webdriver.chrome.driver': chromedriver.path
-    }
+    server_path: 'chromedriver',  // ✅ Use built-in Chromedriver
+    port: 9515,
   },
 
   test_settings: {
     default: {
+      launch_url: 'http://automationpractice.multiformis.com',
+      desiredCapabilities: {
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+          w3c: true,
+          args: [
+            '--headless=new',
+            '--no-sandbox',
+            '--disable-gpu',
+            '--disable-dev-shm-usage',
+            '--window-size=1280,800'
+          ]
+        }
+      },
       screenshots: {
         enabled: true,
-        path: TEST_RESULTS_PATH,
+        path: 'screenshots',
         on_failure: true,
         on_error: true
-      },
-      globals: {
-        waitForConditionTimeout: 5000
-      },
-      desiredCapabilities: {
-        browserName: 'chrome',
-        javascriptEnabled: true,
-        acceptSslCerts: true,
-        chromeOptions: {
-          args: ['headless', 'disable-gpu']
-        }
-      }
-    },
-    chrome: {
-      desiredCapabilities: {
-        browserName: 'chrome',
-        javascriptEnabled: true,
-        acceptSslCerts: true,
-        chromeOptions: {
-          args: ['headless']
-        }
       }
     }
   }
 };
-
-module.exports.TEST_RESULTS_PATH = TEST_RESULTS_PATH;
