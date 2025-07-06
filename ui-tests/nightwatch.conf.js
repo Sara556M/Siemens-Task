@@ -7,7 +7,7 @@ module.exports = {
     start_process: true,
     port: 9515,
     cli_args: ['--verbose']
-    // ✅ NO server_path here — let Nightwatch detect it
+    // ✅ DO NOT SET `server_path` manually
   },
 
   test_settings: {

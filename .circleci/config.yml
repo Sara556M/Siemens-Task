@@ -18,11 +18,7 @@ jobs:
 
       - run:
           name: Add node_modules/.bin to PATH
-          command: echo 'export PATH=$PATH:./node_modules/.bin' >> $BASH_ENV
-
-      - run:
-          name: Make Nightwatch executable
-          command: cd ui-tests && chmod +x ./node_modules/.bin/nightwatch
+          command: echo 'export PATH=$PATH:$PWD/ui-tests/node_modules/.bin' >> $BASH_ENV
 
       - run:
           name: Run Nightwatch UI Tests (Chrome Headless)
