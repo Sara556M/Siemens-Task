@@ -1,59 +1,54 @@
 version: 2.1
 
-# This is the core of the configuration: the job that will run your tests.
 jobs:
   run-tests:
-    # We use a pre-built Docker image from CircleCI that includes Node.js,
-    # Chrome, and the correct chromedriver. This is the easiest and most reliable method.
     docker:
-      - image: cimg/node:18.19.0-browsers # You can use a newer Node LTS version if you prefer
+      - image: cimg/node:18.19.0-browsers
 
-    # Define the directory where all commands will be run
-    working_directory: ~/project
+    # CHANGE THIS LINE:
+    # Tell CircleCI to operate inside your project's subfolder.
+    # Replace 'ui-tests' with the actual name of your folder.
+    working_directory: ~/project/ui-tests
 
     steps:
-      # 1. Get the code from your repository
+      # 1. Get the code from your repository. This still checks out to ~/project.
       - checkout
 
-      # 2. Restore cached dependencies to speed up the build
+      # The rest of the steps will now run inside ~/project/ui-tests,
+      # where your package.json is located.
+
+      # 2. Restore cached dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
-            # Fallback to the most recent cache if no exact match is found
             - v1-dependencies-
 
-      # 3. Install all project dependencies
+      # 3. Install all project dependencies (will now find package.json)
       - run:
           name: Install Dependencies
           command: npm install
 
-      # 4. Save the dependency cache for future builds
+      # 4. Save the dependency cache
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
 
-      # 5. Run your Nightwatch tests using the script from package.json
-      # CircleCI environments have limited resources, so we add the --no-sandbox flag.
-      # Your nightwatch.conf.js already has this, which is great!
+      # 5. Run your Nightwatch tests
       - run:
           name: Run Nightwatch Tests
           command: npm run test
 
-      # 6. Store test results for CircleCI's "Tests" tab
-      # This allows you to see a summary of which tests passed or failed.
+      # 6. Store test results
       - store_test_results:
           path: tests_output
 
-      # 7. Store artifacts for debugging failed tests
-      # This will save screenshots and XML reports from your tests_output folder.
+      # 7. Store artifacts
       - store_artifacts:
           path: tests_output
       - store_artifacts:
           path: screenshots
 
-# This section defines the order in which jobs are run.
-# For this simple case, we just have one job.
 workflows:
   version: 2
   build-and-test:
