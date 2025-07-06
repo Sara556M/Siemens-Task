@@ -2,8 +2,8 @@
   "name": "ui-tests",
   "version": "1.0.0",
   "scripts": {
-    "test": "nightwatch --env chrome_headless tests",
-    "test:debug": "nightwatch --env chrome tests"
+    "test": "npx nightwatch --env chrome_headless tests",
+    "test:debug": "npx nightwatch --env chrome tests"
   },
   "devDependencies": {
     "nightwatch": "^3.3.0"
