@@ -19,7 +19,7 @@ jobs:
 
       - run:
           name: Check Google Chrome version
-          command: google-chrome --version
+          command: google-chrome-stable --version
 
       - run:
           name: Run Nightwatch UI Tests in Headless Chrome
