@@ -7,6 +7,7 @@ module.exports = {
     start_process: true,
     port: 9515,
     cli_args: ['--verbose']
+    // server_path is auto-detected from node_modules/.bin
   },
 
   test_settings: {
