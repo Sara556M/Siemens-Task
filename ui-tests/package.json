@@ -6,7 +6,6 @@
     "test:debug": "nightwatch --env chrome tests"
   },
   "devDependencies": {
-    "chromedriver": "^138.0.0",
     "nightwatch": "^3.3.0"
   }
 }

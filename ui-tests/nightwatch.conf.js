@@ -5,9 +5,8 @@ module.exports = {
 
   webdriver: {
     start_process: true,
-    port: 9515,
-    cli_args: ['--verbose']
-    // ✅ DO NOT SET `server_path` manually
+    port: 9515
+    // server_path intentionally left empty to use system chromedriver
   },
 
   test_settings: {
