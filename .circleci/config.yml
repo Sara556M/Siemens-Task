@@ -1,51 +1,35 @@
 version: 2.1
 
-jobs:
-  run-ui-tests:
+executors:
+  node-executor:
     docker:
-      - image: cimg/node:18.20.2
-    working_directory: ~/project
-    steps:
-      - checkout
-      - run:
-          name: Install UI Test Dependencies
-          command: |
-            cd ui-tests
-            npm install
-      - run:
-          name: Run Contact Page Test
-          command: |
-            cd ui-tests
-            chmod +x node_modules/.bin/nightwatch
-            npx nightwatch --env default tests/contactTest.js
-      - run:
-          name: Run Home Page Test
-          command: |
-            cd ui-tests
-            npx nightwatch --env default tests/homeTest.js
+      - image: cimg/node:20.12.2-browsers
 
-  run-api-tests:
-    docker:
-      - image: cimg/node:18.20.2
+jobs:
+  test-ui:
+    executor: node-executor
     working_directory: ~/project
     steps:
       - checkout
+
       - run:
-          name: Install API Test Dependencies
-          command: |
-            cd api-tests
-            npm install
+          name: Install dependencies
+          command: cd ui-tests && npm install
+
       - run:
-          name: Run API Tests
-          command: |
-            cd api-tests
-            npm test
+          name: Make Nightwatch executable
+          command: cd ui-tests && chmod +x ./node_modules/.bin/nightwatch
+
+      - run:
+          name: Run Nightwatch UI Tests (Chrome Headless)
+          command: cd ui-tests && npm run test
+
+      - store_artifacts:
+          path: ui-tests/tests_output
+          destination: test-reports
 
 workflows:
   version: 2
-  run-tests:
+  test-workflow:
     jobs:
-      - run-ui-tests
-      - run-api-tests:
-          requires:
-            - run-ui-tests
+      - test-ui
