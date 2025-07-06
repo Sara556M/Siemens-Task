@@ -19,14 +19,14 @@ jobs:
 
       - run:
           name: Install UI dependencies
-          command: cd ui-tests && npm install
+          command: npm install
 
       - run:
           name: Run Nightwatch UI tests (headless)
-          command: cd ui-tests && npm test
+          command: npm test
 
       - store_artifacts:
-          path: ui-tests/screenshots
+          path: screenshots
           destination: screenshots
 
   api-test:
@@ -39,19 +39,15 @@ jobs:
 
       - run:
           name: Install API dependencies
-          command: cd api-tests && npm install
+          command: npm install
 
       - run:
-          name: Ensure jest is executable
-          command: chmod +x ./node_modules/.bin/jest
-
-      - run:
-          name: Run API tests
-          command: cd api-tests && npm test
+          name: Run API Tests
+          command: npm test
 
 workflows:
   version: 2
-  run-all-tests:
+  test-all:
     jobs:
       - ui-test
       - api-test
