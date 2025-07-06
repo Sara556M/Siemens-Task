@@ -1,3 +1,5 @@
+const chromedriver = require('chromedriver');
+
 module.exports = {
   src_folders: ['tests'],
   page_objects_path: ['page-objects'],
@@ -6,7 +8,7 @@ module.exports = {
   webdriver: {
     start_process: true,
     port: 9515,
-    server_path: '', // Uses system ChromeDriver
+    server_path: chromedriver.path,
     cli_args: ['--verbose']
   },
 
@@ -16,6 +18,7 @@ module.exports = {
       desiredCapabilities: {
         browserName: 'chrome',
         'goog:chromeOptions': {
+          binary: '/usr/bin/google-chrome',  // ✅ CircleCI-specific Chrome binary path
           args: [
             '--headless=new',
             '--disable-gpu',

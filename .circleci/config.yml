@@ -3,15 +3,15 @@ version: 2.1
 executors:
   chrome-node:
     docker:
-      - image: cimg/node:20.6.1-browsers
-    working_directory: ~/project/ui-tests  # نبدأ من داخل مجلد ui-tests مباشرة
+      - image: cimg/node:20.6.1-browsers  # ✅ بها Google Chrome & ChromeDriver
+    working_directory: ~/project/ui-tests
 
 jobs:
   test:
     executor: chrome-node
     steps:
       - checkout:
-          path: ~/project  # 👈 نعمل checkout لجذر المشروع داخل مجلد project
+          path: ~/project
 
       - run:
           name: Install dependencies
