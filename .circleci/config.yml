@@ -1,40 +1,43 @@
 version: 2.1
 
 jobs:
-  test:
+  ui-tests:
     docker:
-      - image: cimg/node:lts-browsers  # Official CircleCI Node image with Chrome
+      - image: cimg/node:lts-browsers
     steps:
       - checkout
-
-      # Cache dependencies for faster builds
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
-
-      # Install dependencies
       - run:
-          name: Install dependencies
-          command: npm install  
-
-      # Save cache
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
-
-      # Run tests
+          name: Install UI dependencies
+          working_directory: ui-tests
+          command: npm install
       - run:
-          name: Run Nightwatch tests
+          name: Run UI tests
+          working_directory: ui-tests
           command: npm test
+      - store_artifacts:
+          path: ui-tests/tests_output
+      - store_artifacts:
+          path: ui-tests/screenshots
 
-      # Store test artifacts
+  api-tests:
+    docker:
+      - image: cimg/node:lts-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install API dependencies
+          working_directory: api-tests
+          command: npm install
+      - run:
+          name: Run API tests
+          working_directory: api-tests
+          command: npm test
       - store_artifacts:
-          path: tests_output
-      - store_artifacts:
-          path: screenshots
+          path: api-tests/test-results
 
 workflows:
-  test-suite:
+  version: 2
+  test-all:
     jobs:
-      - test
+      - ui-tests
+      - api-tests
