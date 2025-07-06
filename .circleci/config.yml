@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: cimg/node:18.20-browsers
+      - image: cimg/node:18.20-browsers  # ✅ Chrome & Chromedriver built-in
     working_directory: ~/project/ui-tests
 
 jobs:
@@ -16,10 +16,6 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install
-
-      - run:
-          name: Check Google Chrome version
-          command: google-chrome-stable --version
 
       - run:
           name: Run Nightwatch UI Tests in Headless Chrome
