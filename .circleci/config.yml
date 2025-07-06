@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/node:18.20.2-browsers   # ✅ Has Chrome & ChromeDriver
+      - image: cimg/node:18.20.2  # ✅ No need for preinstalled browsers
     working_directory: ~/project
 
     steps:
@@ -15,22 +15,18 @@ jobs:
             - ui-tests-deps-
 
       - run:
-          name: Install dependencies
+          name: Install project dependencies
           command: |
             cd ui-tests
             npm install
 
       - save_cache:
+          key: ui-tests-deps-{{ checksum "ui-tests/package-lock.json" }}
           paths:
             - ui-tests/node_modules
-          key: ui-tests-deps-{{ checksum "ui-tests/package-lock.json" }}
 
       - run:
-          name: Fix Nightwatch permissions
-          command: chmod +x ui-tests/node_modules/.bin/nightwatch
-
-      - run:
-          name: Run Nightwatch tests
+          name: Run Nightwatch Tests
           command: |
             cd ui-tests
             npm test

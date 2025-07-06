@@ -2,11 +2,11 @@
   "name": "ui-tests",
   "version": "1.0.0",
   "scripts": {
-    "test": "npx nightwatch --env chrome_headless tests",
-    "test:debug": "npx nightwatch --env chrome tests"
+    "test": "nightwatch --config nightwatch.conf.js"
   },
   "devDependencies": {
-    "nightwatch": "^3.3.0",
-    "chromedriver": "^138.0.0"
+    "chromedriver": "^2.45.0",
+    "selenium-server": "^3.141.59",
+    "nightwatch": "^1.0.18"
   }
 }
