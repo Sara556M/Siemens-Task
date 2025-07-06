@@ -1,33 +1,35 @@
 version: 2.1
 
+executors:
+  chrome-executor:
+    docker:
+      - image: cimg/node:18.20-browsers
+    working_directory: ~/project/ui-tests
+
 jobs:
   test:
-    docker:
-      - image: cimg/node:lts-browsers
+    executor: chrome-executor
     steps:
       - checkout
-      # Debug step to verify files
-      - run: ls -la
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Move to ui-tests folder
+          command: cd ui-tests
+
       - run:
           name: Install dependencies
-          command: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          command: npm ci
+
       - run:
-          name: Run tests
+          name: Run Nightwatch UI Tests in Headless Chrome
           command: npm test
+
       - store_artifacts:
           path: tests_output
-      - store_artifacts:
-          path: screenshots
+          destination: test-results
 
 workflows:
   version: 2
-  test-workflow:
+  test-and-deploy:
     jobs:
       - test
