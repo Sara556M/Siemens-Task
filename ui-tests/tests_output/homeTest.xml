@@ -5,13 +5,13 @@
 
   <testsuite name="homeTest" id="homeTest"
     errors="1" failures="0" hostname="" package="homeTest" skipped="1"
-    tests="0" time="0.000" timestamp="">
+    tests="0" time="0.001000" timestamp="">
   
 
   
     <system-err>
-       An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created
-from unknown error: no chrome binary at /usr/bin/google-chrome-stable
+       An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 120
+Current browser version is 138.0.7204.97 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe
   Verify if ChromeDriver is configured correctly; using:
   {
      start_process: true,
@@ -26,8 +26,8 @@ from unknown error: no chrome binary at /usr/bin/google-chrome-stable
 
  
   Set webdriver.log_path in your Nightwatch config to retrieve more logs from ChromeDriver.
- An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created
-from unknown error: no chrome binary at /usr/bin/google-chrome-stable
+ An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 120
+Current browser version is 138.0.7204.97 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe
   Verify if ChromeDriver is configured correctly; using:
   {
      start_process: true,
@@ -46,10 +46,10 @@ from unknown error: no chrome binary at /usr/bin/google-chrome-stable
   
 
     
-    <error message="An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created
-from unknown error: no chrome binary at /usr/bin/google-chrome-stable"><![CDATA[
-      SessionNotCreatedError: An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created
-from unknown error: no chrome binary at /usr/bin/google-chrome-stable
+    <error message="An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 120
+Current browser version is 138.0.7204.97 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe"><![CDATA[
+      SessionNotCreatedError: An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 120
+Current browser version is 138.0.7204.97 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe
     at Object.throwDecodedError (C:\Users\sarar\Documents\GitHub\Siemens-Task\ui-tests\node_modules\selenium-webdriver\lib\error.js:521:15)
     at parseHttpResponse (C:\Users\sarar\Documents\GitHub\Siemens-Task\ui-tests\node_modules\selenium-webdriver\lib\http.js:514:13)
     at Executor.execute (C:\Users\sarar\Documents\GitHub\Siemens-Task\ui-tests\node_modules\selenium-webdriver\lib\http.js:446:28)
