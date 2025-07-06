@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "test": "nightwatch --env chrome_headless",
-    "test:debug": "nightwatch --env chrome",
-    "ci-test": "nightwatch --env chrome_headless --reporter junit --output tests_output/junit"
+    "test:debug": "nightwatch --env default"
   },
-  "devDependencies": {
-    "chromedriver": "^138.0.0",
+  "dependencies": {
     "nightwatch": "^3.3.0",
-    "junit-report-merger": "^3.0.0"
+    "chromedriver": "^138.0.0"
   }
 }

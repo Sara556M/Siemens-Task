@@ -2,7 +2,7 @@ module.exports = {
   src_folders: ['tests'],
   page_objects_path: ['page-objects'],
   output_folder: 'tests_output',
-  
+
   webdriver: {
     start_process: true,
     port: 9515,
@@ -13,19 +13,25 @@ module.exports = {
   test_settings: {
     default: {
       launch_url: 'http://automationpractice.multiformis.com',
-      selenium_host: 'localhost',
-      silent: true,
+      desiredCapabilities: {
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+          args: [
+            '--disable-gpu',
+            '--no-sandbox',
+            '--window-size=1280,800'
+          ]
+        }
+      },
       screenshots: {
         enabled: true,
         path: 'screenshots',
-        on_failure: true,
-        on_error: true
+        on_failure: true
       }
     },
-
     chrome_headless: {
+      extends: 'default',
       desiredCapabilities: {
-        browserName: 'chrome',
         'goog:chromeOptions': {
           args: [
             '--headless=new',
