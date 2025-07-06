@@ -18,6 +18,10 @@ jobs:
           command: npm install
 
       - run:
+          name: Fix chromedriver permissions
+          command: chmod +x ./node_modules/.bin/chromedriver
+
+      - run:
           name: Check Chromedriver version
           command: ./node_modules/.bin/chromedriver --version
 
