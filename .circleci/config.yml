@@ -4,13 +4,19 @@ jobs:
   build:
     docker:
       - image: cimg/node:18.20.2-browsers
-    working_directory: ~/project/ui-tests  # FIXED: correct folder
+    working_directory: ~/project  # Stay at root (not inside ui-tests)
 
     steps:
       - checkout
+
       - run:
           name: Install dependencies
-          command: npm install
+          command: |
+            cd ui-tests
+            npm install
+
       - run:
-          name: Run Chrome tests
-          command: npm run test-chrome
+          name: Run tests
+          command: |
+            cd ui-tests
+            npm run test-chrome
