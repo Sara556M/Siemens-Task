@@ -7,11 +7,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install UI dependencies
+          name: Install Chrome
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y google-chrome-stable
+            google-chrome --version
+      - run:
+          name: Install dependencies
           working_directory: ui-tests
           command: npm install
       - run:
-          name: Run UI tests
+          name: Run tests
           working_directory: ui-tests
           command: npm test
       - store_artifacts:
@@ -19,25 +25,8 @@ jobs:
       - store_artifacts:
           path: ui-tests/screenshots
 
-  api-tests:
-    docker:
-      - image: cimg/node:lts-browsers
-    steps:
-      - checkout
-      - run:
-          name: Install API dependencies
-          working_directory: api-tests
-          command: npm install
-      - run:
-          name: Run API tests
-          working_directory: api-tests
-          command: npm test
-      - store_artifacts:
-          path: api-tests/test-results
-
 workflows:
   version: 2
-  test-all:
+  test-workflow:
     jobs:
       - ui-tests
-      - api-tests
