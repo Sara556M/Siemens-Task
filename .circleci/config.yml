@@ -4,12 +4,19 @@ executors:
   chrome-node:
     docker:
       - image: cimg/node:20.6.1-browsers
-    working_directory: ~/project/ui-tests  
+    working_directory: ~/project/ui-tests
+
 jobs:
   test:
     executor: chrome-node
     steps:
       - checkout
+
+      - run:
+          name: Move into ui-tests folder
+          command: |
+            mv ../ui-tests/* .
+            mv ../ui-tests/.* . 2>/dev/null || true
 
       - run:
           name: Install dependencies
