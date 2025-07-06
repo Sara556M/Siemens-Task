@@ -15,7 +15,7 @@ jobs:
       # Install dependencies
       - run:
           name: Install dependencies
-          command: npm ci  # Uses package-lock.json for deterministic installs
+          command: npm install  
 
       # Save cache
       - save_cache:
