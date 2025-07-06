@@ -3,9 +3,8 @@ version: 2.1
 executors:
   chrome-node:
     docker:
-      - image: cimg/node:20.6.1-browsers  
-    working_directory: ~/project
-
+      - image: cimg/node:20.6.1-browsers
+    working_directory: ~/project/ui-tests  
 jobs:
   test:
     executor: chrome-node
