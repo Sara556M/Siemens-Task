@@ -1,0 +1,40 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/node:lts-browsers  # Official CircleCI Node image with Chrome
+    steps:
+      - checkout
+
+      # Cache dependencies for faster builds
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+
+      # Install dependencies
+      - run:
+          name: Install dependencies
+          command: npm ci  # Uses package-lock.json for deterministic installs
+
+      # Save cache
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+
+      # Run tests
+      - run:
+          name: Run Nightwatch tests
+          command: npm test
+
+      # Store test artifacts
+      - store_artifacts:
+          path: tests_output
+      - store_artifacts:
+          path: screenshots
+
+workflows:
+  test-suite:
+    jobs:
+      - test
