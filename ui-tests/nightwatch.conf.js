@@ -6,7 +6,7 @@ module.exports = {
   webdriver: {
     start_process: true,
     port: 9515,
-    server_path: '', // Uses system ChromeDriver
+    server_path: '',
     cli_args: ['--verbose']
   },
 
@@ -22,7 +22,8 @@ module.exports = {
             '--no-sandbox',
             '--disable-dev-shm-usage',
             '--window-size=1280,800'
-          ]
+          ],
+          binary: '/usr/bin/google-chrome'
         }
       },
       screenshots: {

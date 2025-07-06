@@ -1,16 +1,33 @@
 version: 2.1
-orbs:
-  browser-tools: circleci/browser-tools@1.4.0
 
 jobs:
   test:
     docker:
-      - image: cimg/node:lts-browsers  # Pre-installed with Chrome
+      - image: cimg/node:lts  # Base Node image
     steps:
       - checkout
       - run:
-          name: Verify Chrome
+          name: Install Chrome and ChromeDriver
           command: |
+            # Install Chrome
+            sudo apt-get update
+            sudo apt-get install -y wget
+            wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+            echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+            sudo apt-get update
+            sudo apt-get install -y google-chrome-stable
+
+            # Install matching ChromeDriver
+            CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+            CHROME_MAJOR_VERSION=${CHROME_VERSION%.*.*}
+            wget -N https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION}
+            CHROMEDRIVER_VERSION=$(cat LATEST_RELEASE_${CHROME_MAJOR_VERSION})
+            wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
+            unzip chromedriver_linux64.zip
+            sudo mv chromedriver /usr/local/bin/
+            sudo chmod +x /usr/local/bin/chromedriver
+
+            # Verify installations
             echo "Chrome path: $(which google-chrome)"
             google-chrome --version
             echo "ChromeDriver path: $(which chromedriver)"
