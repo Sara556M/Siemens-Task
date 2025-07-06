@@ -29,7 +29,7 @@ jobs:
           path: screenshots
           destination: screenshots
 
-  api-test:
+    api-test:
     docker:
       - image: cimg/node:18.12
     working_directory: ~/project/api-tests
@@ -40,6 +40,10 @@ jobs:
       - run:
           name: Install API dependencies
           command: npm install
+
+      - run:
+          name: Fix Jest permission
+          command: chmod +x ./node_modules/.bin/jest
 
       - run:
           name: Run API Tests
