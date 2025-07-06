@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "scripts": {
     "test": "nightwatch --config nightwatch.conf.js",
-    "test-chrome": "nightwatch --env chrome"
+    "test-chrome": "nightwatch --env chrome --config nightwatch.conf.js",
+    "test-firefox": "nightwatch --env firefox --config nightwatch.conf.js"
   },
   "devDependencies": {
     "chromedriver": "^2.46.0",
-    "selenium-server": "^3.141.59",
-    "nightwatch": "^1.7.7"
+    "geckodriver": "^1.22.0",
+    "nightwatch": "^1.7.7",
+    "selenium-server": "^3.141.59"
   }
 }
