@@ -3,33 +3,40 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: cimg/node:20.12.2-browsers
+      - image: cimg/node:18.20-browsers
+    working_directory: ~/project
 
 jobs:
-  test-ui:
+  test:
     executor: node-executor
-    working_directory: ~/project
     steps:
       - checkout
 
       - run:
           name: Install dependencies
-          command: cd ui-tests && npm install
+          command: npm install
 
       - run:
-          name: Add node_modules/.bin to PATH
-          command: echo 'export PATH=$PATH:$PWD/ui-tests/node_modules/.bin' >> $BASH_ENV
+          name: Check Chromedriver version
+          command: ./node_modules/.bin/chromedriver --version
 
       - run:
-          name: Run Nightwatch UI Tests (Chrome Headless)
-          command: cd ui-tests && npm run test
+          name: Add chromedriver to PATH
+          command: echo 'export PATH=$PATH:./node_modules/.bin' >> $BASH_ENV && source $BASH_ENV
+
+      - run:
+          name: Run Nightwatch UI Tests in Headless Chrome
+          command: npm test
 
       - store_artifacts:
-          path: ui-tests/tests_output
-          destination: test-reports
+          path: screenshots
+          destination: screenshots
+
+      - store_artifacts:
+          path: tests_output
+          destination: test_results
 
 workflows:
-  version: 2
   test-workflow:
     jobs:
-      - test-ui
+      - test
