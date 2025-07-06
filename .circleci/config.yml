@@ -4,31 +4,35 @@ jobs:
   build:
     docker:
       - image: cimg/node:18.20.2
-    working_directory: ~/project/ui-tests  
+    working_directory: ~/project
 
     steps:
       - checkout
 
       - restore_cache:
           keys:
-            - dependencies-{{ checksum "ui-tests/package-lock.json" }}
-            - dependencies-
+            - ui-tests-deps-{{ checksum "ui-tests/package-lock.json" }}
+            - ui-tests-deps-
 
       - run:
-          name: Install dependencies
-          command: npm install
+          name: Install dependencies for UI tests
+          command: |
+            cd ui-tests
+            npm install
 
       - save_cache:
           paths:
-            - node_modules
-          key: dependencies-{{ checksum "ui-tests/package-lock.json" }}
+            - ui-tests/node_modules
+          key: ui-tests-deps-{{ checksum "ui-tests/package-lock.json" }}
 
       - run:
-          name: Run Nightwatch Tests
-          command: npm test
+          name: Run Nightwatch tests
+          command: |
+            cd ui-tests
+            npm test
 
 workflows:
   version: 2
-  test:
+  build-and-test:
     jobs:
       - build
