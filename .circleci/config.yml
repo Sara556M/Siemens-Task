@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0.0 # Use the official Node.js orb
+  node: circleci/node@5.0.0
 
 jobs:
   run-ui-tests:
@@ -12,21 +12,31 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: Navigate to ui-tests directory
+          command: cd ui-tests # Change directory before running npm commands
       - node/install-packages:
           pkg-manager: npm
+          app-dir: ui-tests # Specify the directory where package.json is located relative to the project root
+
       - run:
           name: Install Chrome and ChromeDriver
           command: |
             sudo apt-get update
             sudo apt-get install -y google-chrome-stable
-            # ChromeDriver is usually installed by `chromedriver` npm package,
-            # but sometimes explicit installation of an apt package might be needed for system-wide access.
-            # For this setup, we'll primarily rely on the npm package's installation,
-            # but ensure Chrome is available.
+            # ChromeDriver is usually installed by `chromedriver` npm package.
+            # We are ensuring Chrome is available.
 
       - run:
           name: Run Nightwatch UI Tests
           command: npm run test
+
+      - store_artifacts:
+          path: ui-tests/tests_output # Adjust path to be relative to the checkout directory
+          destination: nightwatch-test-reports
+      - store_artifacts:
+          path: ui-tests/screenshots # Adjust path to be relative to the checkout directory
+          destination: nightwatch-screenshots
 
 workflows:
   version: 2
