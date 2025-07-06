@@ -3,11 +3,19 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cypress/browsers:node18.12.0-chrome107  # ✅ فيها Chrome و ChromeDriver
+      - image: cimg/node:18.12-browsers
     working_directory: ~/project/ui-tests
     steps:
       - checkout:
           path: ~/project
+
+      - run:
+          name: Install latest Google Chrome
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y wget unzip gnupg
+            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo apt install ./google-chrome-stable_current_amd64.deb
 
       - run:
           name: Install dependencies
