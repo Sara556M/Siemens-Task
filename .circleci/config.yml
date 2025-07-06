@@ -1,37 +1,32 @@
 version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.4.0
 
 jobs:
-  ui-tests:
+  test:
     docker:
-      - image: cimg/node:lts-browsers  # Pre-installed with Chrome
+      - image: cimg/node:lts-browsers
     steps:
       - checkout
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run:
-          name: Verify Chrome installation
+          name: Verify versions
           command: |
-            sudo apt-get update
-            sudo apt-get install -y wget
-            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-            echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-            sudo apt-get update
-            sudo apt-get install -y google-chrome-stable
             google-chrome --version
             chromedriver --version
       - run:
           name: Install dependencies
-          working_directory: ui-tests
-          command: npm install
+          command: npm ci
       - run:
           name: Run tests
-          working_directory: ui-tests
           command: npm test
       - store_artifacts:
-          path: ui-tests/tests_output
+          path: tests_output
       - store_artifacts:
-          path: ui-tests/screenshots
+          path: screenshots
 
 workflows:
-  version: 2
-  test-workflow:
+  test-suite:
     jobs:
-      - ui-tests
+      - test

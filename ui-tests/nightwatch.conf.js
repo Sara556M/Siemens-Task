@@ -2,18 +2,12 @@ module.exports = {
   src_folders: ['tests'],
   page_objects_path: ['page-objects'],
   output_folder: 'tests_output',
-  custom_commands_path: '',
-  custom_assertions_path: '',
-  globals_path: '',
-
+  
   webdriver: {
     start_process: true,
     port: 9515,
-    server_path: '', // Let CircleCI handle ChromeDriver
-    log_path: 'logs',
-    cli_args: [
-      '--verbose'
-    ]
+    server_path: '',
+    cli_args: ['--verbose']
   },
 
   test_settings: {
@@ -39,32 +33,9 @@ module.exports = {
             '--no-sandbox',
             '--disable-dev-shm-usage',
             '--window-size=1280,800'
-          ],
-          binary: '/usr/bin/google-chrome' // Explicit path for CircleCI
+          ]
         }
       }
-    },
-
-    chrome: {
-      desiredCapabilities: {
-        browserName: 'chrome',
-        'goog:chromeOptions': {
-          args: [
-            '--disable-gpu',
-            '--no-sandbox',
-            '--window-size=1280,800'
-          ],
-          binary: '/usr/bin/google-chrome'
-        }
-      }
-    }
-  },
-
-  test_runner: {
-    type: 'mocha',
-    options: {
-      ui: 'bdd',
-      reporter: 'list'
     }
   }
 };
