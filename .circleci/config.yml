@@ -26,6 +26,11 @@ jobs:
           key: ui-tests-deps-{{ checksum "ui-tests/package-lock.json" }}
 
       - run:
+          name: Fix Nightwatch permissions
+          command: |
+            chmod +x ui-tests/node_modules/.bin/nightwatch
+
+      - run:
           name: Run Nightwatch tests
           command: |
             cd ui-tests
