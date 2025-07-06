@@ -7,7 +7,7 @@ module.exports = {
     start_process: true,
     port: 9515,
     cli_args: ['--verbose']
-    // server_path is auto-detected from node_modules/.bin
+    // ✅ NO server_path here — let Nightwatch detect it
   },
 
   test_settings: {
