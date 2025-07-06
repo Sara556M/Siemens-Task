@@ -18,9 +18,8 @@ module.exports = {
       desiredCapabilities: {
         browserName: 'chrome',
         'goog:chromeOptions': {
-          binary: '/usr/bin/google-chrome',  // ✅ CircleCI-specific Chrome binary path
           args: [
-            '--headless=new',
+            '--headless',
             '--disable-gpu',
             '--no-sandbox',
             '--disable-dev-shm-usage',
