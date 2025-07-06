@@ -8,34 +8,32 @@ jobs:
   run-ui-tests:
     executor:
       name: node/default
-      tag: '18.16.0' # Use a Node.js version compatible with your project
+      tag: '20.10.0' # <--- CHANGE THIS LINE to Node.js 20.x or higher
 
     steps:
       - checkout
       - run:
           name: Navigate to ui-tests directory
-          command: cd ui-tests # Change directory before running npm commands
+          command: cd ui-tests
       - node/install-packages:
           pkg-manager: npm
-          app-dir: ui-tests # Specify the directory where package.json is located relative to the project root
+          app-dir: ui-tests
 
       - run:
           name: Install Chrome and ChromeDriver
           command: |
             sudo apt-get update
             sudo apt-get install -y google-chrome-stable
-            # ChromeDriver is usually installed by `chromedriver` npm package.
-            # We are ensuring Chrome is available.
 
       - run:
           name: Run Nightwatch UI Tests
           command: npm run test
 
       - store_artifacts:
-          path: ui-tests/tests_output # Adjust path to be relative to the checkout directory
+          path: tests_output
           destination: nightwatch-test-reports
       - store_artifacts:
-          path: ui-tests/screenshots # Adjust path to be relative to the checkout directory
+          path: screenshots
           destination: nightwatch-screenshots
 
 workflows:
