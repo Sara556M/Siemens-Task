@@ -4,7 +4,7 @@ executors:
   node-executor:
     docker:
       - image: cimg/node:18.20-browsers
-    working_directory: ~/project
+    working_directory: ~/project/ui-tests  
 
 jobs:
   test:
