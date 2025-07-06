@@ -6,10 +6,8 @@ module.exports = {
   webdriver: {
     start_process: true,
     port: 9515,
-    // For CircleCI, use the chromedriver from the 'cimg/node-browsers' image.
-    // For local runs, this path will be empty, and Nightwatch will find
-    // the chromedriver from your system's PATH.
-    server_path: process.env.CI ? '/usr/local/bin/chromedriver' : ''
+    server_path: process.env.CI ? '/usr/bin/chromedriver' : '',  // ✅ Corrected path for CircleCI
+    cli_args: []
   },
 
   test_settings: {
@@ -21,8 +19,8 @@ module.exports = {
           args: [
             '--headless=new',
             '--disable-gpu',
-            '--no-sandbox', // This is critical for running in Docker containers
-            '--disable-dev-shm-usage', // Good practice for CI environments
+            '--no-sandbox',
+            '--disable-dev-shm-usage',
             '--window-size=1280,800'
           ]
         }
@@ -33,7 +31,16 @@ module.exports = {
         on_failure: true,
         on_error: true
       }
+    },
+
+    chrome: {
+      launch_url: 'http://automationpractice.multiformis.com',
+      desiredCapabilities: {
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+          args: ['--window-size=1280,800']
+        }
+      }
     }
-    // You can add your 'chrome' environment for local debugging here as well
   }
 };
