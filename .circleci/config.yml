@@ -3,15 +3,14 @@ version: 2.1
 jobs:
   ui-tests:
     docker:
-      - image: cimg/node:lts-browsers
+      - image: cimg/node:lts-browsers  # Official CircleCI image with Chrome pre-installed
     steps:
       - checkout
       - run:
-          name: Install Chrome
+          name: Verify Chrome installation
           command: |
-            sudo apt-get update
-            sudo apt-get install -y google-chrome-stable
             google-chrome --version
+            chromedriver --version
       - run:
           name: Install dependencies
           working_directory: ui-tests
