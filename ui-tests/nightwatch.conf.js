@@ -6,32 +6,15 @@ module.exports = {
   webdriver: {
     start_process: true,
     port: 9515,
-    server_path: '',
+    server_path: '', // Let CircleCI handle ChromeDriver
     cli_args: ['--verbose']
   },
 
   test_settings: {
-    default: {
+    chrome_headless: {
       launch_url: 'http://automationpractice.multiformis.com',
       desiredCapabilities: {
         browserName: 'chrome',
-        'goog:chromeOptions': {
-          args: [
-            '--disable-gpu',
-            '--no-sandbox',
-            '--window-size=1280,800'
-          ]
-        }
-      },
-      screenshots: {
-        enabled: true,
-        path: 'screenshots',
-        on_failure: true
-      }
-    },
-    chrome_headless: {
-      extends: 'default',
-      desiredCapabilities: {
         'goog:chromeOptions': {
           args: [
             '--headless=new',
@@ -39,8 +22,14 @@ module.exports = {
             '--no-sandbox',
             '--disable-dev-shm-usage',
             '--window-size=1280,800'
-          ]
+          ],
+          binary: '/usr/bin/google-chrome' // Explicit path
         }
+      },
+      screenshots: {
+        enabled: true,
+        path: 'screenshots',
+        on_failure: true
       }
     }
   }
