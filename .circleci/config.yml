@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/node:18.20.2
+      - image: cimg/node:18.20.2-browsers
     working_directory: ~/project
 
     steps:
@@ -24,19 +24,6 @@ jobs:
           paths:
             - ui-tests/node_modules
           key: ui-tests-deps-{{ checksum "ui-tests/package-lock.json" }}
-
-      - run:
-          name: Install Chrome
-          command: |
-            sudo apt update
-            sudo apt install -y google-chrome-stable || sudo apt install -y chromium-browser
-
-      - run:
-          name: Install ChromeDriver
-          command: |
-            sudo apt install -y chromium-chromedriver || sudo apt install -y chromedriver
-            sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/local/bin/chromedriver || true
-            sudo ln -s /usr/lib/chromium/chromedriver /usr/local/bin/chromedriver || true
 
       - run:
           name: Fix Nightwatch permissions
