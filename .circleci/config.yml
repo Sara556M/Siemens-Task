@@ -5,11 +5,10 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/node:lts  # Start with base Node image
+      - image: cimg/node:lts  # Base Node image
     steps:
       - checkout
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - browser-tools/install-browser-tools  # Installs both Chrome and ChromeDriver
       - run:
           name: Verify installations
           command: |

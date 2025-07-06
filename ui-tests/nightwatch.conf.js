@@ -6,7 +6,7 @@ module.exports = {
   webdriver: {
     start_process: true,
     port: 9515,
-    server_path: '', // Let CircleCI handle ChromeDriver
+    server_path: '', // Uses system ChromeDriver
     cli_args: ['--verbose']
   },
 
