@@ -3,14 +3,15 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: cimg/node:18.20-browsers
+      - image: cimg/node:18.20-browsers  
     working_directory: ~/project/ui-tests  
 
 jobs:
   test:
     executor: node-executor
     steps:
-      - checkout
+      - checkout:
+          path: ~/project  
 
       - run:
           name: Install dependencies
