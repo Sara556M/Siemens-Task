@@ -1,39 +1,31 @@
 version: 2.1
 
 executors:
-  node-executor:
+  chrome-executor:
     docker:
-      - image: cimg/node:18.20-browsers
-    working_directory: ~/project/ui-tests
+      - image: cimg/node:18.20-browsers  
+    working_directory: ~/project
 
 jobs:
   test:
-    executor: node-executor
+    executor: chrome-executor
     steps:
-      - checkout:
-          path: ~/project
+      - checkout
 
       - run:
           name: Install dependencies
-          command: npm install
-
-      - run:
-          name: Fix Nightwatch permissions
-          command: chmod +x ./node_modules/.bin/nightwatch
+          command: npm ci
 
       - run:
           name: Run Nightwatch UI Tests in Headless Chrome
           command: npm test
 
       - store_artifacts:
-          path: screenshots
-          destination: screenshots
-
-      - store_artifacts:
           path: tests_output
-          destination: test_results
+          destination: test-results
 
 workflows:
-  test-workflow:
+  version: 2
+  test-and-deploy:
     jobs:
       - test
