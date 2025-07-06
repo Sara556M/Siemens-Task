@@ -5,45 +5,40 @@ jobs:
     docker:
       - image: cimg/node:18.19.0-browsers
 
-    # CHANGE THIS LINE:
-    # Tell CircleCI to operate inside your project's subfolder.
-    # Replace 'ui-tests' with the actual name of your folder.
+    # This tells CircleCI to run commands inside the ui-tests folder
     working_directory: ~/project/ui-tests
 
     steps:
-      # 1. Get the code from your repository. This still checks out to ~/project.
+      # 1. Checks out the whole repository (Siemens-Task) to ~/project
       - checkout
 
-      # The rest of the steps will now run inside ~/project/ui-tests,
-      # where your package.json is located.
+      # From here on, all commands run inside ~/project/ui-tests
 
-      # 2. Restore cached dependencies
+      # 2. Restore cache
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
 
-      # 3. Install all project dependencies (will now find package.json)
+      # 3. Install dependencies (it will now find package.json)
       - run:
           name: Install Dependencies
           command: npm install
 
-      # 4. Save the dependency cache
+      # 4. Save cache
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
 
-      # 5. Run your Nightwatch tests
+      # 5. Run tests
       - run:
           name: Run Nightwatch Tests
           command: npm run test
 
-      # 6. Store test results
+      # 6. Store test results and artifacts
       - store_test_results:
           path: tests_output
-
-      # 7. Store artifacts
       - store_artifacts:
           path: tests_output
       - store_artifacts:
