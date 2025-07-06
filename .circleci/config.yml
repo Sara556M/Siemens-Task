@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/node:18.20.2-browsers  # ✅ Pre-installed Chrome & ChromeDriver
+      - image: cimg/node:18.20.2-browsers   # ✅ Has Chrome & ChromeDriver
     working_directory: ~/project
 
     steps:
@@ -15,7 +15,7 @@ jobs:
             - ui-tests-deps-
 
       - run:
-          name: Install dependencies for UI tests
+          name: Install dependencies
           command: |
             cd ui-tests
             npm install
@@ -27,8 +27,7 @@ jobs:
 
       - run:
           name: Fix Nightwatch permissions
-          command: |
-            chmod +x ui-tests/node_modules/.bin/nightwatch
+          command: chmod +x ui-tests/node_modules/.bin/nightwatch
 
       - run:
           name: Run Nightwatch tests

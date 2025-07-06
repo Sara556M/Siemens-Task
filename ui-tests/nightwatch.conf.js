@@ -6,7 +6,7 @@ module.exports = {
   webdriver: {
     start_process: true,
     port: 9515,
-    server_path: process.env.CI ? '/usr/bin/chromedriver' : '',  // ✅ Corrected path for CircleCI
+    server_path: process.env.CI ? '/usr/bin/chromedriver' : '',   // Correct for CircleCI + Local
     cli_args: []
   },
 
@@ -32,7 +32,6 @@ module.exports = {
         on_error: true
       }
     },
-
     chrome: {
       launch_url: 'http://automationpractice.multiformis.com',
       desiredCapabilities: {
