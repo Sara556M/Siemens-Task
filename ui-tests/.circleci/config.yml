@@ -1,0 +1,15 @@
+@'
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: cimg/node:lts-browsers
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test
+      - store_artifacts:
+          path: tests_output
+      - store_artifacts:
+          path: screenshots
+'@ | Out-File -FilePath .circleci/config.yml -Encoding utf8
