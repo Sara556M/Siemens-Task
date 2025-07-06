@@ -2,14 +2,11 @@
   "name": "ui-tests",
   "version": "1.0.0",
   "scripts": {
-    "test": "nightwatch --config nightwatch.conf.js",
-    "test-chrome": "nightwatch --env chrome --config nightwatch.conf.js",
-    "test-firefox": "nightwatch --env firefox --config nightwatch.conf.js"
+    "test": "nightwatch --env chrome_headless tests",
+    "test:debug": "nightwatch --env chrome tests"
   },
   "devDependencies": {
-    "chromedriver": "^2.46.0",
-    "geckodriver": "^1.22.0",
-    "nightwatch": "^1.7.7",
-    "selenium-server": "^3.141.59"
+    "chromedriver": "^138.0.1",
+    "nightwatch": "^3.3.0"
   }
 }
