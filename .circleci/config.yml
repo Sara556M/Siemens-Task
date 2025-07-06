@@ -1,49 +1,31 @@
 version: 2.1
 
+executors:
+  chrome-node:
+    docker:
+      - image: cimg/node:20.6.1-browsers  
+    working_directory: ~/project
+
 jobs:
   test:
-    docker:
-      - image: cimg/node:lts  # Base Node image
+    executor: chrome-node
     steps:
       - checkout
-      - run:
-          name: Install Chrome and ChromeDriver
-          command: |
-            # Install Chrome
-            sudo apt-get update
-            sudo apt-get install -y wget
-            wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-            echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-            sudo apt-get update
-            sudo apt-get install -y google-chrome-stable
 
-            # Install matching ChromeDriver
-            CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
-            CHROME_MAJOR_VERSION=${CHROME_VERSION%.*.*}
-            wget -N https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION}
-            CHROMEDRIVER_VERSION=$(cat LATEST_RELEASE_${CHROME_MAJOR_VERSION})
-            wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
-            unzip chromedriver_linux64.zip
-            sudo mv chromedriver /usr/local/bin/
-            sudo chmod +x /usr/local/bin/chromedriver
-
-            # Verify installations
-            echo "Chrome path: $(which google-chrome)"
-            google-chrome --version
-            echo "ChromeDriver path: $(which chromedriver)"
-            chromedriver --version
       - run:
           name: Install dependencies
-          command: npm ci
+          command: npm install
+
       - run:
-          name: Run tests
+          name: Run Nightwatch UI tests (headless)
           command: npm test
-      - store_artifacts:
-          path: tests_output
+
       - store_artifacts:
           path: screenshots
+          destination: screenshots
 
 workflows:
-  test-suite:
+  version: 2
+  ui-tests:
     jobs:
       - test
