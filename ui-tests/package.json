@@ -2,11 +2,13 @@
   "name": "ui-tests",
   "version": "1.0.0",
   "scripts": {
-    "test": "nightwatch --env chrome_headless tests",
-    "test:debug": "nightwatch --env chrome tests"
+    "test": "nightwatch --env chrome_headless",
+    "test:debug": "nightwatch --env chrome",
+    "ci-test": "nightwatch --env chrome_headless --reporter junit --output tests_output/junit"
   },
   "devDependencies": {
-    "chromedriver": "^138.0.1",
-    "nightwatch": "^3.3.0"
+    "chromedriver": "^138.0.0",
+    "nightwatch": "^3.3.0",
+    "junit-report-merger": "^3.0.0"
   }
 }
