@@ -5,12 +5,11 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/node:lts  # Base Node image
+      - image: cimg/node:lts-browsers  # Pre-installed with Chrome
     steps:
       - checkout
-      - browser-tools/install-browser-tools  # Installs both Chrome and ChromeDriver
       - run:
-          name: Verify installations
+          name: Verify Chrome
           command: |
             echo "Chrome path: $(which google-chrome)"
             google-chrome --version
