@@ -1,31 +1,35 @@
+# .circleci/config.yml
 version: 2.1
 
-executors:
-  chrome-executor:
-    docker:
-      - image: cimg/node:18.20-browsers  
-    working_directory: ~/project
+orbs:
+  node: circleci/node@5.0.0 # Use the official Node.js orb
 
 jobs:
-  test:
-    executor: chrome-executor
+  run-ui-tests:
+    executor:
+      name: node/default
+      tag: '18.16.0' # Use a Node.js version compatible with your project
+
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Install Chrome and ChromeDriver
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y google-chrome-stable
+            # ChromeDriver is usually installed by `chromedriver` npm package,
+            # but sometimes explicit installation of an apt package might be needed for system-wide access.
+            # For this setup, we'll primarily rely on the npm package's installation,
+            # but ensure Chrome is available.
 
       - run:
-          name: Install dependencies
-          command: npm ci
-
-      - run:
-          name: Run Nightwatch UI Tests in Headless Chrome
-          command: npm test
-
-      - store_artifacts:
-          path: tests_output
-          destination: test-results
+          name: Run Nightwatch UI Tests
+          command: npm run test
 
 workflows:
   version: 2
-  test-and-deploy:
+  build-and-test:
     jobs:
-      - test
+      - run-ui-tests
