@@ -26,6 +26,19 @@ jobs:
           key: ui-tests-deps-{{ checksum "ui-tests/package-lock.json" }}
 
       - run:
+          name: Install Chrome
+          command: |
+            sudo apt update
+            sudo apt install -y google-chrome-stable || sudo apt install -y chromium-browser
+
+      - run:
+          name: Install ChromeDriver
+          command: |
+            sudo apt install -y chromium-chromedriver || sudo apt install -y chromedriver
+            sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/local/bin/chromedriver || true
+            sudo ln -s /usr/lib/chromium/chromedriver /usr/local/bin/chromedriver || true
+
+      - run:
           name: Fix Nightwatch permissions
           command: chmod +x ui-tests/node_modules/.bin/nightwatch
 
