@@ -3,26 +3,23 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/node:18.20.2-browsers  # ✅ Includes Chrome, Chromedriver, Node, NPM
-    working_directory: ~/project
+      - image: karthikiyengar/node-nightwatch:0.0.1  # Pre-installed Java, Selenium, Browsers, Drivers
+
+    working_directory: ~/ui-tests
 
     steps:
       - checkout
 
       - run:
-          name: Install dependencies
-          command: |
-            cd ui-tests
-            npm install
+          name: Install Node.js dependencies
+          command: npm install
 
       - run:
-          name: Run Nightwatch tests (Chrome Headless)
-          command: |
-            cd ui-tests
-            npm test
+          name: Run Nightwatch Tests (Chrome)
+          command: npm run test-chrome
 
 workflows:
   version: 2
-  build-and-test:
+  build_and_test:
     jobs:
       - build

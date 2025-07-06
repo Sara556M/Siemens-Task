@@ -2,9 +2,15 @@
   "name": "ui-tests",
   "version": "1.0.0",
   "scripts": {
-    "test": "npx nightwatch --config nightwatch.conf.js"
+    "test": "nightwatch --config nightwatch.conf.js --env circleci",
+    "test-chrome": "nightwatch --config nightwatch.conf.js --env chrome",
+    "test-parallel": "nightwatch --config nightwatch.conf.js --env chrome,firefox"
   },
-  "devDependencies": {
-    "nightwatch": "^3.3.0"
+  "dependencies": {
+    "chai": "^3.5.0",
+    "chromedriver": "^2.9.1-0",
+    "geckodriver": "^1.4.0",
+    "nightwatch": "git://github.com/nightwatchjs/nightwatch.git",
+    "selenium-server-standalone-jar": "3.9.1"
   }
 }
