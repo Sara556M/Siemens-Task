@@ -1,33 +1,32 @@
 version: 2.1
 
 jobs:
-  test:
+  test-api:
     docker:
-      - image: cimg/node:20.9.0
-    working_directory: ~/project/api-tests  # <== ضيفي المسار هنا
+      - image: cimg/node:18.20.2  # تأكدي من توافقه مع Node.js اللي بتستخدميه
+    working_directory: ~/project
 
     steps:
       - checkout
 
       - run:
           name: Install dependencies
-          command: npm install
+          command: cd api-tests && npm install
 
       - run:
-          name: Start mock-user-auth server in background
-          command: |
-            nohup npm run dev > server.log 2>&1 &
+          name: Start server
+          command: cd api-tests && nohup npm run dev > server.log 2>&1 &
 
       - run:
-          name: Wait for server to be ready
+          name: Wait for server to be healthy
           command: npx wait-on http://localhost:3000/api/v1/healthcheck
 
       - run:
-          name: Run tests
-          command: npm test
+          name: Run API tests
+          command: cd api-tests && npm test
 
 workflows:
   version: 2
-  test-workflow:
+  test-all:
     jobs:
-      - test
+      - test-api
