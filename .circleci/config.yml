@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   ui-test:
     docker:
-      - image: cimg/node:18.12-browsers
+      - image: cimg/node:20.11.0-browsers
     working_directory: ~/project/ui-tests
     steps:
       - checkout:
