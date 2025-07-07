@@ -46,15 +46,7 @@ jobs:
           command: chmod +x ./node_modules/.bin/jest
 
       - run:
-          name: Start API Server in background
-          command: npm run dev &
-
-      - run:
-          name: Wait for API server on port 3000
-          command: npx wait-on http://127.0.0.1:3000
-
-      - run:
-          name: Run API Tests
+          name: Run API Tests (assumes server already running)
           command: npm test
 
 workflows:
