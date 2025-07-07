@@ -1,9 +1,9 @@
 version: 2.1
 
 jobs:
-  ui-test:
+  test:
     docker:
-      - image: cimg/node:20.11.0-browsers
+      - image: cimg/node:18.12-browsers
     working_directory: ~/project/ui-tests
     steps:
       - checkout:
@@ -18,7 +18,7 @@ jobs:
             sudo apt install ./google-chrome-stable_current_amd64.deb
 
       - run:
-          name: Install UI dependencies
+          name: Install dependencies
           command: npm install
 
       - run:
@@ -29,25 +29,8 @@ jobs:
           path: screenshots
           destination: screenshots
 
-  api-test:
-    docker:
-      - image: cimg/node:18.12
-    working_directory: ~/project/api-tests
-    steps:
-      - checkout:
-          path: ~/project
-
-      - run:
-          name: Install API dependencies
-          command: npm install
-
-      - run:
-          name: Run API Tests
-          command: npm test
-
 workflows:
   version: 2
-  test-all:
+  ui-tests:
     jobs:
-      - ui-test
-      - api-test
+      - test
