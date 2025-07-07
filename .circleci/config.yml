@@ -42,6 +42,10 @@ jobs:
           command: npm install
 
       - run:
+          name: Fix permissions for nodemon
+          command: chmod +x ./node_modules/.bin/nodemon
+
+      - run:
           name: Start API server in background
           command: |
             nohup npm run dev > output.log 2>&1 &
