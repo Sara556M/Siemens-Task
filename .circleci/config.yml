@@ -1,16 +1,25 @@
 version: 2.1
 
-jobs:
-  ui-test:
+executors:
+  node-ui:
     docker:
       - image: cimg/node:18.12-browsers
     working_directory: ~/project/ui-tests
+
+  node-api:
+    docker:
+      - image: cimg/node:18.12
+    working_directory: ~/project/api-tests
+
+jobs:
+  ui-test:
+    executor: node-ui
     steps:
       - checkout:
           path: ~/project
 
       - run:
-          name: Install latest Google Chrome
+          name: Install Google Chrome
           command: |
             sudo apt-get update
             sudo apt-get install -y wget unzip gnupg
@@ -30,9 +39,7 @@ jobs:
           destination: screenshots
 
   api-test:
-    docker:
-      - image: cimg/node:18.12
-    working_directory: ~/project/api-tests
+    executor: node-api
     steps:
       - checkout:
           path: ~/project
@@ -42,25 +49,22 @@ jobs:
           command: npm install
 
       - run:
-          name: Fix permissions for nodemon
-          command: chmod +x ./node_modules/.bin/nodemon
-
-      - run:
           name: Start API server in background
           command: |
-            nohup npm run dev > output.log 2>&1 &
-            sleep 5
-            echo "Server started in background"
+            nohup npx nodemon ./node_modules/mock-user-auth/bin/www.js > output.log 2>&1 &
 
       - run:
           name: Wait for server to be ready
           command: |
-            echo "Waiting for server on http://localhost:3000..."
-            curl --retry 10 --retry-connrefused --retry-delay 2 http://localhost:3000 || (echo "Server did not respond" && cat output.log && exit 1)
+            npx wait-on http://localhost:3000
 
       - run:
           name: Run API tests
           command: npm test
+
+      - store_artifacts:
+          path: reports/test-report.html
+          destination: api-test-report
 
       - store_artifacts:
           path: output.log
