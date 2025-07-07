@@ -30,9 +30,11 @@ Siemens-Task/
 │ ├── tests/ # Test cases for Contact Form & Search
 │ ├── page-objects/ # Page Object Model files (selectors)
 │ └── tests_output/ # HTML report generated after test run
+│
 ├── api-tests/ # API Automation Testing (Supertest + Jest)
 │ ├── tests/ # Auth & User route test cases
 │ └── tests_output/ # Output for API test reporting
+│
 └── .circleci/
 └── config.yml # CircleCI configuration file
 
