@@ -1,35 +1,35 @@
 version: 2.1
 
 jobs:
-  build:
+  test:
     docker:
-      - image: cimg/node:14.21
+      - image: cimg/node:18.16  # نسخة Node حديثة ومستقرة
     working_directory: ~/project
-
     steps:
       - checkout
 
+      # تثبيت الحزم
       - run:
           name: Install dependencies
-          command: |
-            npm install
+          command: npm install
 
+      # تشغيل السيرفر في الخلفية
       - run:
-          name: Start server in background
-          command: |
-            npm run dev &
-
+          name: Start server
+          command: npm run dev &
+      
+      # الانتظار حتى السيرفر يشتغل ويكون endpoint صحي
       - run:
           name: Wait for healthcheck endpoint
-          command: |
-            npx wait-on http://localhost:3000/api/v1/healthcheck
+          command: npx wait-on http://localhost:3000/api/v1/healthcheck
 
+      # تشغيل اختبارات API أو أي اختبارات عندك
       - run:
           name: Run tests
-          command: |
-            # add your test command here
+          command: npm test
 
 workflows:
-  build_and_test:
+  version: 2
+  test_and_deploy:
     jobs:
-      - build
+      - test
