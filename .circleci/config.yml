@@ -48,8 +48,8 @@ jobs:
       - run:
           name: Start API server in background
           command: |
-            npm run dev &
-            sleep 10
+            node ./node_modules/mock-user-auth/bin/www.js &
+            sleep 15
 
       - run:
           name: Run API Tests
