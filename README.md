@@ -1,1 +1,1 @@
-[![CircleCI](https://circleci.com/gh/Sara556M/Siemens-Task.svg?style=shield)](https://app.circleci.com/pipelines/github/Sara556M/Siemens-Task)
+[![CircleCI](https://circleci.com/gh/Siemens-Automation/Siemens-Task.svg?style=svg)](https://app.circleci.com/pipelines/circleci/5BG2cqNPqzyVashdvxMQwK)
