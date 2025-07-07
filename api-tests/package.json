@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon --cwd ./node_modules/mock-user-auth bin/www.js",
     "test": "jest",
-    "wait": "wait-on http://localhost:3000/login"
+    "wait": "wait-on tcp:3000"
   },
   "directories": {
     "test": "tests"
