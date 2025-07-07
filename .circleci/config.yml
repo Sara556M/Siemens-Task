@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   ui-test:
     docker:
-      - image: cimg/node:20.5.1-browsers
+      - image: cimg/node:20.11.0-browsers
     working_directory: ~/project/ui-tests
     steps:
       - checkout:
@@ -31,7 +31,7 @@ jobs:
 
   api-test:
     docker:
-      - image: cimg/node:20.5.1
+      - image: cimg/node:20.11.0
     working_directory: ~/project/api-tests
     steps:
       - checkout:
@@ -42,17 +42,13 @@ jobs:
           command: npm install
 
       - run:
-          name: Start API server in background
+          name: Start API server and wait for port 3000
           command: |
             npm run dev &
-            sleep 5
+            npm run wait
 
       - run:
-          name: Wait for server on port 3000
-          command: npx wait-on http://localhost:3000
-
-      - run:
-          name: Run API Tests
+          name: Run API tests
           command: npm test
 
 workflows:
