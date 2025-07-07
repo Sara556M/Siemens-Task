@@ -19,6 +19,9 @@ jobs:
           command: |
             echo "Starting mock-user-auth server..."
             nohup npx nodemon ./node_modules/mock-user-auth/bin/www.js > output.log 2>&1 &
+            sleep 5
+            echo "===== output.log (startup logs) ====="
+            cat output.log || echo "No logs yet"
 
       - run:
           name: Wait for server to be ready
