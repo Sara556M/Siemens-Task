@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/node:18.20.2  # اختاري نسخة Node مناسبة لمشروعك
+      - image: cimg/node:18.20.2
     working_directory: ~/project
 
     steps:
@@ -14,17 +14,22 @@ jobs:
           command: cd api-tests && pwd
 
       - run:
-          name: Install dependencies
+          name: Install dependencies including wait-on
           command: |
             cd api-tests
             npm install
+            npm install wait-on --save-dev
+
+      - run:
+          name: Make wait-on executable
+          command: chmod +x ./node_modules/.bin/wait-on
 
       - run:
           name: Start server and wait for healthcheck
           command: |
             cd api-tests
-            npm run dev &              # تشغيل السيرفر في الخلفية
-            npx wait-on http://localhost:3000/api/v1/healthcheck
+            npm run dev &
+            ./node_modules/.bin/wait-on http://localhost:3000/api/v1/healthcheck
 
       - run:
           name: Run tests
