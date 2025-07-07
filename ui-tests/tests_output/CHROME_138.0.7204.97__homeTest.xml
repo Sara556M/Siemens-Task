@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
-            failures="0"
+            failures="1"
             tests="1">
 
   <testsuite name="homeTest" id="homeTest"
-    errors="0" failures="0" hostname="" package="homeTest" skipped="0"
-    tests="1" time="6.957" timestamp="">
+    errors="0" failures="1" hostname="" package="homeTest" skipped="0"
+    tests="1" time="5.631" timestamp="">
   
-    <testcase name="TC:Search for &#34;dress&#34; and verify results" classname="homeTest" time="6.955" assertions="5">
-
-    
-
-    
-
-    
-
-    
-
+    <testcase name="TC:Search for &#34;dress&#34; and verify results" classname="homeTest" time="5.629" assertions="1">  <failure message="Timed out while waiting for element &lt;body&gt; to be present for 1000 milliseconds. - expected &#34;visible&#34; but got: &#34;not found&#34; (3037ms)">    at TC:Search for &#34;dress&#34; and verify results (C:\Users\sarar\Documents\GitHub\Siemens-Task\ui-tests\tests\homeTest.js:16:8)</failure>
+<system-out>[[ATTACHMENT|C:\Users\sarar\Documents\GitHub\Siemens-Task\ui-tests\screenshots\homeTest\TC:Search-for-dress-and-verify-results_FAILED_Jul-07-2025-184322-GMT+0300.png]]</system-out>
     
     </testcase>
   
