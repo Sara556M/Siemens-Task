@@ -15,7 +15,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y wget unzip gnupg
             wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            sudo apt install ./google-chrome-stable_current_amd64.deb
+            sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
       - run:
           name: Install UI dependencies
@@ -42,11 +42,17 @@ jobs:
           command: npm install
 
       - run:
-          name: Fix Jest permission
-          command: chmod +x ./node_modules/.bin/jest
+          name: Start API Server if not running
+          command: |
+            if ! nc -z localhost 3000; then
+              echo "Port 3000 is not in use. Starting API server..."
+              npm run dev & sleep 10
+            else
+              echo "Port 3000 is already in use."
+            fi
 
       - run:
-          name: Run API Tests (assumes server already running)
+          name: Run API Tests
           command: npm test
 
 workflows:
