@@ -4,30 +4,31 @@ jobs:
   test:
     docker:
       - image: cimg/node:18.20.2
-    working_directory: ~/project
+    working_directory: ~/project/api-tests
 
     steps:
       - checkout
 
       - run:
           name: Install dependencies
-          working_directory: ~/project/api-tests
           command: npm install
 
       - run:
-          name: Start mock-user-auth server
-          working_directory: ~/project/api-tests
+          name: Make binaries executable
+          command: chmod +x ./node_modules/.bin/*
+
+      - run:
+          name: Start server and wait for healthcheck
           command: |
             npm run dev &
             npx wait-on http://localhost:3000/api/v1/healthcheck
 
       - run:
-          name: Run tests
-          working_directory: ~/project/api-tests
+          name: Run API Tests
           command: npm test
 
 workflows:
   version: 2
-  test-workflow:
+  run-tests:
     jobs:
       - test
