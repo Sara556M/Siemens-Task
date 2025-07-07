@@ -29,7 +29,6 @@ Siemens-Task/
 - ui-tests(UI Automation Testing using NightwatchJS)**
   - tests(Test cases for Contact Form & Homepage Search)
   - page-objects(Page Object Model files selectors)
-  - Invalid email format
   - tests_output(HTML reports generated after UI test execution)
 - **api-tests(API Automation Testing using Supertest & Jest)**
   - tests(Test cases for Auth and User routes)
