@@ -1,8 +1,11 @@
+version: 2.1
+
 jobs:
   api-test:
     docker:
       - image: cimg/node:18.12
     working_directory: ~/project/api-tests
+
     steps:
       - checkout:
           path: ~/project
@@ -12,7 +15,7 @@ jobs:
           command: npm install
 
       - run:
-          name: Start server in background
+          name: Start mock-user-auth server in background
           command: |
             echo "Starting mock-user-auth server..."
             nohup npx nodemon ./node_modules/mock-user-auth/bin/www.js > output.log 2>&1 &
@@ -24,5 +27,19 @@ jobs:
             npx wait-on http://localhost:3000 || (echo "Server did not respond" && cat output.log && exit 1)
 
       - run:
-          name: Run tests
+          name: Run API tests
           command: npm test
+
+      - store_artifacts:
+          path: output.log
+          destination: server-log
+
+      - store_artifacts:
+          path: reports/test-report.html
+          destination: api-test-report
+
+workflows:
+  version: 2
+  test-workflow:
+    jobs:
+      - api-test
