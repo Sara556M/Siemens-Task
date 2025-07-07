@@ -35,15 +35,11 @@ jobs:
     working_directory: ~/project/api-tests
     steps:
       - checkout:
-          path: ~/project
+          path: ~/project/api-tests
 
       - run:
           name: Install API dependencies
           command: npm install
-
-      - run:
-          name: Fix Jest permission
-          command: chmod +x ./node_modules/.bin/jest
 
       - run:
           name: Start API server in background
