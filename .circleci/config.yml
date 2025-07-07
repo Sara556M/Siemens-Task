@@ -1,19 +1,22 @@
 version: 2.1
 
 jobs:
-  test:
+  test-api:
     docker:
       - image: cimg/node:20.5.1
 
+    working_directory: ~/project/api-tests
+
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
 
       - run:
           name: Install dependencies
           command: npm install
 
       - run:
-          name: Start mock server in background
+          name: Start server in background
           command: npm run dev &
 
       - run:
@@ -21,11 +24,11 @@ jobs:
           command: npx wait-on http://localhost:3000/api/v1/healthcheck
 
       - run:
-          name: Run tests
+          name: Run API Tests
           command: npm test
 
 workflows:
   version: 2
-  test-workflow:
+  run-tests:
     jobs:
-      - test
+      - test-api
