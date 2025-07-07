@@ -46,14 +46,12 @@ jobs:
           command: chmod +x ./node_modules/.bin/jest
 
       - run:
-          name: Start API server if not already running
-          command: |
-            if ! nc -z localhost 3000; then
-              echo "Starting API server..."
-              npm run dev & sleep 10
-            else
-              echo "Port 3000 already in use."
-            fi
+          name: Start API server in background
+          command: npm run dev &
+
+      - run:
+          name: Wait for server to be ready
+          command: npx wait-on http://localhost:3000
 
       - run:
           name: Run API tests
