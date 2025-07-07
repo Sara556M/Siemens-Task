@@ -46,11 +46,13 @@ jobs:
           command: |
             nohup npm run dev > output.log 2>&1 &
             sleep 5
-            cat output.log
+            echo "Server started in background"
 
       - run:
           name: Wait for server to be ready
-          command: npx wait-on http://localhost:3000
+          command: |
+            echo "Waiting for server on http://localhost:3000..."
+            curl --retry 10 --retry-connrefused --retry-delay 2 http://localhost:3000 || (echo "Server did not respond" && cat output.log && exit 1)
 
       - run:
           name: Run API tests
@@ -64,5 +66,5 @@ workflows:
   version: 2
   test-all:
     jobs:
-      - ui-test
       - api-test
+      - ui-test
