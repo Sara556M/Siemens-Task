@@ -5,37 +5,39 @@
 
   <testsuite name="homeTest" id="homeTest"
     errors="1" failures="0" hostname="" package="homeTest" skipped="1"
-    tests="0" time="0.001000" timestamp="">
+    tests="0" time="0.000" timestamp="">
   
 
   
     <system-err>
-       An error occurred while creating a new ChromeDriver session: [Error] spawn /usr/bin/chromedriver ENOENT
+       An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 138.0.7204.97 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe
   Verify if ChromeDriver is configured correctly; using:
   {
      start_process: true,
-     server_path: &#39;/usr/bin/chromedriver&#39;,
+     server_path: &#39;C:\\Users\\sarar\\Documents\\GitHub\\Siemens-Task\\ui-tests\\node_modules\\chromedriver\\lib\\chromedriver\\chromedriver.exe&#39;,
      port: 9515,
      host: &#39;localhost&#39;,
      ssl: false,
      default_path_prefix: &#39;&#39;,
      proxy: undefined,
-     cli_args: {}
+     cli_args: [ &#39;--verbose&#39; ]
   }
 
  
   Set webdriver.log_path in your Nightwatch config to retrieve more logs from ChromeDriver.
- An error occurred while creating a new ChromeDriver session: [Error] spawn /usr/bin/chromedriver ENOENT
+ An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 138.0.7204.97 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe
   Verify if ChromeDriver is configured correctly; using:
   {
      start_process: true,
-     server_path: &#39;/usr/bin/chromedriver&#39;,
+     server_path: &#39;C:\\Users\\sarar\\Documents\\GitHub\\Siemens-Task\\ui-tests\\node_modules\\chromedriver\\lib\\chromedriver\\chromedriver.exe&#39;,
      port: 9515,
      host: &#39;localhost&#39;,
      ssl: false,
      default_path_prefix: &#39;&#39;,
      proxy: undefined,
-     cli_args: {}
+     cli_args: [ &#39;--verbose&#39; ]
   }
 
  
@@ -44,9 +46,13 @@
   
 
     
-    <error message="An error occurred while creating a new ChromeDriver session: [Error] spawn /usr/bin/chromedriver ENOENT"><![CDATA[
-      Error: An error occurred while creating a new ChromeDriver session: [Error] spawn /usr/bin/chromedriver ENOENT
-    at C:\Users\sarar\Documents\GitHub\Siemens-Task\ui-tests\node_modules\selenium-webdriver\remote\index.js:256:70
+    <error message="An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 138.0.7204.97 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe"><![CDATA[
+      SessionNotCreatedError: An error occurred while creating a new ChromeDriver session: [SessionNotCreatedError] session not created: This version of ChromeDriver only supports Chrome version 107
+Current browser version is 138.0.7204.97 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe
+    at Object.throwDecodedError (C:\Users\sarar\Documents\GitHub\Siemens-Task\ui-tests\node_modules\selenium-webdriver\lib\error.js:521:15)
+    at parseHttpResponse (C:\Users\sarar\Documents\GitHub\Siemens-Task\ui-tests\node_modules\selenium-webdriver\lib\http.js:514:13)
+    at Executor.execute (C:\Users\sarar\Documents\GitHub\Siemens-Task\ui-tests\node_modules\selenium-webdriver\lib\http.js:446:28)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
       ]]></error>  
 

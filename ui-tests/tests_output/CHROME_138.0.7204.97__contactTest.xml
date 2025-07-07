@@ -5,44 +5,44 @@
 
   <testsuite name="contactTest" id="contactTest"
     errors="0" failures="0" hostname="" package="contactTest" skipped="0"
-    tests="8" time="27.52" timestamp="">
+    tests="8" time="18.10" timestamp="">
   
-    <testcase name="TC_CU_01 – Valid Form Submission" classname="contactTest" time="8.207" assertions="1">
+    <testcase name="TC_CU_01 – Valid Form Submission" classname="contactTest" time="5.008" assertions="1">
 
     
     </testcase>
   
-    <testcase name="TC_CU_02 – Missing Subject Heading" classname="contactTest" time="1.936" assertions="1">
+    <testcase name="TC_CU_02 – Missing Subject Heading" classname="contactTest" time="1.581" assertions="1">
 
     
     </testcase>
   
-    <testcase name="TC_CU_03 – Missing Email Address" classname="contactTest" time="1.974" assertions="1">
+    <testcase name="TC_CU_03 – Missing Email Address" classname="contactTest" time="1.462" assertions="1">
 
     
     </testcase>
   
-    <testcase name="TC_CU_04 – Invalid Email Format" classname="contactTest" time="2.879" assertions="1">
+    <testcase name="TC_CU_04 – Invalid Email Format" classname="contactTest" time="2.154" assertions="1">
 
     
     </testcase>
   
-    <testcase name="TC_CU_05 – Missing Message Body" classname="contactTest" time="2.760" assertions="1">
+    <testcase name="TC_CU_05 – Missing Message Body" classname="contactTest" time="1.521" assertions="1">
 
     
     </testcase>
   
-    <testcase name="TC_CU_06 – Upload Valid File Only" classname="contactTest" time="3.554" assertions="1">
+    <testcase name="TC_CU_06 – Upload Valid File Only" classname="contactTest" time="1.462" assertions="1">
 
     
     </testcase>
   
-    <testcase name="TC_CU_07 – Upload Invalid File Type" classname="contactTest" time="3.244" assertions="1">
+    <testcase name="TC_CU_07 – Upload Invalid File Type" classname="contactTest" time="2.909" assertions="1">
 
     
     </testcase>
   
-    <testcase name="TC_CU_08 – Required Fields Only" classname="contactTest" time="2.847" assertions="1">
+    <testcase name="TC_CU_08 – Required Fields Only" classname="contactTest" time="1.849" assertions="1">
 
     
     </testcase>
