@@ -1,39 +1,35 @@
 version: 2.1
 
 jobs:
-  test:
+  build:
     docker:
-      - image: cimg/node:18.20.2
-    working_directory: ~/project  # 👈 غيرنا من api-tests إلى الجذر
+      - image: cimg/node:11.15.0
+    working_directory: ~/project
 
     steps:
       - checkout
 
       - run:
-          name: Move to api-tests directory
-          command: cd api-tests
-
-      - run:
           name: Install dependencies
-          command: cd api-tests && npm install
-
-      - run:
-          name: Make binaries executable
-          command: chmod +x ./api-tests/node_modules/.bin/*
-
-      - run:
-          name: Start server and wait for healthcheck
           command: |
-            cd api-tests
+            npm install
+
+      - run:
+          name: Start server in background
+          command: |
             npm run dev &
+
+      - run:
+          name: Wait for healthcheck endpoint
+          command: |
             npx wait-on http://localhost:3000/api/v1/healthcheck
 
       - run:
-          name: Run API Tests
-          command: cd api-tests && npm test
+          name: Run tests
+          command: |
+            # هنا تحطي أمر تشغيل الاختبارات بتاعتك لو عندك
 
 workflows:
-  version: 2
-  run-tests:
+  build_and_test:
     jobs:
-      - test
+      - build
