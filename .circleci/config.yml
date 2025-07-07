@@ -4,28 +4,33 @@ jobs:
   test:
     docker:
       - image: cimg/node:18.20.2
-    working_directory: ~/project/api-tests
+    working_directory: ~/project  # 👈 غيرنا من api-tests إلى الجذر
 
     steps:
       - checkout
 
       - run:
+          name: Move to api-tests directory
+          command: cd api-tests
+
+      - run:
           name: Install dependencies
-          command: npm install
+          command: cd api-tests && npm install
 
       - run:
           name: Make binaries executable
-          command: chmod +x ./node_modules/.bin/*
+          command: chmod +x ./api-tests/node_modules/.bin/*
 
       - run:
           name: Start server and wait for healthcheck
           command: |
+            cd api-tests
             npm run dev &
             npx wait-on http://localhost:3000/api/v1/healthcheck
 
       - run:
           name: Run API Tests
-          command: npm test
+          command: cd api-tests && npm test
 
 workflows:
   version: 2
