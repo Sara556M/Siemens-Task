@@ -8,18 +8,24 @@ jobs:
     steps:
       - checkout
 
-      - run: npm install
+      - run:
+          name: Install dependencies
+          command: npm install
 
       - run:
-          name: Run mock server in background
-          command: |
-            npm run dev &
-      
+          name: Start mock server in background
+          command: npm run dev &
+
       - run:
           name: Wait for server to be ready
-          command: |
-            npx wait-on http://localhost:3000/api/v1/healthcheck
+          command: npx wait-on http://localhost:3000/api/v1/healthcheck
 
       - run:
           name: Run tests
           command: npm test
+
+workflows:
+  version: 2
+  test-workflow:
+    jobs:
+      - test
