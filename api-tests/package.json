@@ -5,12 +5,13 @@
   "scripts": {
     "dev": "nodemon ./node_modules/mock-user-auth/bin/www.js",
     "test": "jest",
-    "wait": "wait-on http://localhost:3000"
+    "wait": "wait-on http://localhost:3000/login"
   },
   "directories": {
     "test": "tests"
   },
   "dependencies": {
+    "ejs": "^3.1.10",
     "mock-user-auth": "^1.0.15"
   },
   "devDependencies": {
