@@ -15,6 +15,10 @@ jobs:
           command: npm install
 
       - run:
+          name: Fix permissions for nodemon
+          command: chmod +x ./node_modules/.bin/nodemon
+
+      - run:
           name: Start mock-user-auth server in background
           command: |
             echo "Starting mock-user-auth server..."
