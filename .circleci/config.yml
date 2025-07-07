@@ -27,7 +27,7 @@ jobs:
 
       - store_artifacts:
           path: screenshots
-          destination: ui-test-screenshots
+          destination: screenshots
 
   api-test:
     docker:
@@ -46,21 +46,18 @@ jobs:
           command: chmod +x ./node_modules/.bin/jest
 
       - run:
-          name: Start API server in background
-          command: |
-            npm run dev &
+          name: Kill process on port 3000 if exists
+          command: fuser -k 3000/tcp || true
 
       - run:
-          name: Wait for API to be ready
-          command: npx wait-on http://localhost:3000
+          name: Start API Server in background
+          command: |
+            npm run dev &
+            sleep 5
 
       - run:
           name: Run API Tests
           command: npm test
-
-      - store_artifacts:
-          path: tests_output
-          destination: api-test-results
 
 workflows:
   version: 2
