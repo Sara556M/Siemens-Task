@@ -3,8 +3,8 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/node:20.9.0  # يمكنك تعديله حسب نسخة Node التي تستخدمينها
-    working_directory: ~/project
+      - image: cimg/node:20.9.0
+    working_directory: ~/project/api-tests  # <== ضيفي المسار هنا
 
     steps:
       - checkout
@@ -17,7 +17,7 @@ jobs:
           name: Start mock-user-auth server in background
           command: |
             nohup npm run dev > server.log 2>&1 &
-      
+
       - run:
           name: Wait for server to be ready
           command: npx wait-on http://localhost:3000/api/v1/healthcheck
