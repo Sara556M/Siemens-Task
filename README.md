@@ -72,7 +72,7 @@ Siemens-Task/
 ✅ **Execution:** 
 - Tests run using `jest`
 - HTML test report generated at:
-- api-tests/reports/test-report
+  api-tests/reports/test-report
 - CI logs provide visibility for test outcomes
 
 ---
