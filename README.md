@@ -26,6 +26,7 @@ This project presents the solution to the Siemens SDET 2025 technical task, cove
 ## 📁 Project Structure
 
 Siemens-Task/
+│
 ├── ui-tests/ # UI Automation Testing (NightwatchJS)
 │ ├── tests/ # Test cases for Contact Form & Search
 │ ├── page-objects/ # Page Object Model files (selectors)
@@ -37,6 +38,7 @@ Siemens-Task/
 │
 └── .circleci/
 └── config.yml # CircleCI configuration file
+
 
 ---    
 ## 🚀 UI Automation – NightwatchJS
