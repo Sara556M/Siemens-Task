@@ -42,8 +42,10 @@ jobs:
           command: npm install
 
       - run:
-          name: Fix Jest permission
-          command: chmod +x ./node_modules/.bin/jest
+          name: Start API Server in background
+          command: |
+            npm run dev &
+            sleep 5
 
       - run:
           name: Run API Tests
