@@ -44,7 +44,7 @@ Siemens-Task/
 - Uses **Page Object Model (POM)** for clean and reusable selectors.
 - Runs in **headless Chrome** using CircleCI.
 - HTML test report generated at:
-- ui-tests/tests_output/nightwatch-html-report/index.html
+  ui-tests/tests_output/nightwatch-html-report/index.html
 
 ---
 
@@ -120,7 +120,8 @@ Siemens-Task/
 - All reported UI and API bugs
 - Bug reports use a structured format
 - 
-📎 Access all documentation on Google Drive:  
+📎 Access all documentation on Google Drive:
+
 🔗 [Manual Test Cases & Bug Reports](https://drive.google.com/drive/u/0/folders/1ET7xyBDdxSwWtfM0GU5yxYt8mZWrqhZK)
 
 ---
