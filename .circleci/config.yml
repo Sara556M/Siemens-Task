@@ -4,25 +4,39 @@ jobs:
   test:
     docker:
       - image: cimg/node:18.16
-    working_directory: ~/project/api-tests   # هنا نغير المسار لمجلد api-tests
+    working_directory: ~/project
     steps:
       - checkout
-      
+
       - run:
-          name: Install dependencies
-          command: npm install
-      
+          name: List project files
+          command: ls -l
+
       - run:
-          name: Start server
-          command: npm run dev &
-      
+          name: List api-tests folder contents
+          command: ls -l api-tests
+
       - run:
-          name: Wait for healthcheck endpoint
+          name: Install dependencies inside api-tests
+          command: |
+            cd api-tests
+            npm install
+
+      - run:
+          name: Start server inside api-tests
+          command: |
+            cd api-tests
+            npm run dev &
+
+      - run:
+          name: Wait for healthcheck
           command: npx wait-on http://localhost:3000/api/v1/healthcheck
-      
+
       - run:
-          name: Run tests
-          command: npm test
+          name: Run tests inside api-tests
+          command: |
+            cd api-tests
+            npm test
 
 workflows:
   version: 2
