@@ -3,43 +3,37 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/node:18.16
+      - image: cimg/node:18.20.2  # اختاري نسخة Node مناسبة لمشروعك
     working_directory: ~/project
+
     steps:
       - checkout
 
       - run:
-          name: List project files
-          command: ls -l
+          name: Change to api-tests directory
+          command: cd api-tests && pwd
 
       - run:
-          name: List api-tests folder contents
-          command: ls -l api-tests
-
-      - run:
-          name: Install dependencies inside api-tests
+          name: Install dependencies
           command: |
             cd api-tests
             npm install
 
       - run:
-          name: Start server inside api-tests
+          name: Start server and wait for healthcheck
           command: |
             cd api-tests
-            npm run dev &
+            npm run dev &              # تشغيل السيرفر في الخلفية
+            npx wait-on http://localhost:3000/api/v1/healthcheck
 
       - run:
-          name: Wait for healthcheck
-          command: npx wait-on http://localhost:3000/api/v1/healthcheck
-
-      - run:
-          name: Run tests inside api-tests
+          name: Run tests
           command: |
             cd api-tests
             npm test
 
 workflows:
   version: 2
-  test_and_deploy:
+  run-tests:
     jobs:
       - test
