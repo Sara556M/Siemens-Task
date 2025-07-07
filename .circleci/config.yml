@@ -43,19 +43,22 @@ jobs:
 
       - run:
           name: Start API server in background
-          command: nohup npm run dev > output.log 2>&1 &
+          command: |
+            nohup npm run dev > output.log 2>&1 &
+            sleep 5
+            cat output.log
 
       - run:
           name: Wait for server to be ready
           command: npx wait-on http://localhost:3000
 
       - run:
-          name: Debug Server Log
-          command: cat output.log
-
-      - run:
           name: Run API tests
           command: npm test
+
+      - store_artifacts:
+          path: output.log
+          destination: server-log
 
 workflows:
   version: 2
