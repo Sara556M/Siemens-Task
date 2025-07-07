@@ -1,52 +1,25 @@
 version: 2.1
 
 jobs:
-  api-test:
+  test:
     docker:
-      - image: cimg/node:18.12
-    working_directory: ~/project/api-tests
+      - image: cimg/node:20.5.1
 
     steps:
-      - checkout:
-          path: ~/project
+      - checkout
+
+      - run: npm install
 
       - run:
-          name: Install dependencies
-          command: npm install
-
-      - run:
-          name: Fix permissions for nodemon
-          command: chmod +x ./node_modules/.bin/nodemon
-
-      - run:
-          name: Start mock-user-auth server in background
+          name: Run mock server in background
           command: |
-            echo "Starting mock-user-auth server..."
-            nohup npx nodemon ./node_modules/mock-user-auth/bin/www.js > output.log 2>&1 &
-            sleep 10
-            echo "===== output.log (startup logs) ====="
-            cat output.log || echo "No logs yet"
-
+            npm run dev &
+      
       - run:
           name: Wait for server to be ready
           command: |
-            echo "Waiting for server on http://localhost:3000..."
-            npx wait-on --timeout 20000 --verbose http://localhost:3000 || (echo "Server did not respond" && cat output.log && exit 1)
+            npx wait-on http://localhost:3000/api/v1/healthcheck
 
       - run:
-          name: Run API tests
+          name: Run tests
           command: npm test
-
-      - store_artifacts:
-          path: output.log
-          destination: server-log
-
-      - store_artifacts:
-          path: reports/test-report.html
-          destination: api-test-report
-
-workflows:
-  version: 2
-  test-workflow:
-    jobs:
-      - api-test
