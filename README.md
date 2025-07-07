@@ -11,17 +11,6 @@ This project presents the solution to the Siemens SDET 2025 technical task, cove
 
 ---
 
-## 📁 Project Structure
-# Siemens Technical Task – SDET 2025
-
-## ✅ CI/CD Pipeline Status
-[![CircleCI](https://circleci.com/gh/Siemens-Automation/Siemens-Task.svg?style=svg)](https://app.circleci.com/pipelines/circleci/5BG2cqNPqzyVashdvxMQwK)
-
----
-## 📌 Overview
-
-This project presents the solution to the Siemens SDET 2025 technical task, covering both **UI Automation Testing** using NightwatchJS and **API Testing** using Supertest and Jest. The project is fully integrated with **CircleCI** for automated testing workflows.
-
 ---
 
 ## 📁 Project Structure
