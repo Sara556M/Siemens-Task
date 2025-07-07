@@ -119,7 +119,7 @@ Siemens-Task/
 - Full test case documentation (manual)
 - All reported UI and API bugs
 - Bug reports use a structured format
-- 
+
 📎 Access all documentation on Google Drive:
 
 🔗 [Manual Test Cases & Bug Reports](https://drive.google.com/drive/u/0/folders/1ET7xyBDdxSwWtfM0GU5yxYt8mZWrqhZK)
