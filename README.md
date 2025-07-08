@@ -64,7 +64,7 @@ Siemens-Task/
 - Get and update user details
 - Admin-only delete all users (with/without proper key)
 
-❗ **Note:** 3 test cases failed due to actual issues in the mock-user-auth module:
+❗ Note: The api-tests did not fully pass on CircleCI — 3 test cases failed due to actual issues in the mock-user-auth module. These failures are related to the module's internal logic and are not caused by the test environment or CircleCI configuration.
 - `TC_API_02` – Missing fields
 - `TC_API_03` – Invalid email
 - `TC_API_04` – Short password
